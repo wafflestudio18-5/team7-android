@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -14,11 +15,18 @@ android {
         versionCode 1
         versionName "1.0"
 
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        // TODO : HAVE TO ADD BASE_URL
+        debug {
+            buildConfigField "String", "WRITTEN_BASE_URL", '"https://~~"'
+        }
         release {
+            buildConfigField "String", "WRITTEN_BASE_URL", '"https://~~"'
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -49,12 +57,26 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // dagger dependency
-    api 'com.google.dagger:dagger:2.x'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.x'
-    api 'com.google.dagger:dagger-android:2.x'
-    api 'com.google.dagger:dagger-android-support:2.x'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.x'
+    // Dagger
+    def dagger_version = "2.27"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    
+    // OkHttp
+    def okhttp3Version = '4.7.2'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3Version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Version"
+
+    // Retrofit
+    def retrofitVersion = '2.8.1'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
+    implementation "com.google.code.gson:gson:$retrofitVersion"
+
+    // RxJava
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.2'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+
 }
