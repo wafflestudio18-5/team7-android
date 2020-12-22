@@ -1,6 +1,7 @@
 package com.wafflestudio.written.di
 
 import com.wafflestudio.written.BuildConfig
+import com.wafflestudio.written.network.TempService
 import dagger.Module
 import dagger.Provides
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
@@ -13,13 +14,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-abstract class NetworkModule {
+class NetworkModule {
 
     private val baseUrl = BuildConfig.WRITTEN_BASE_URL
 
     @Provides
     @Singleton
-    internal fun provideOkHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
+    fun provideOkHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
@@ -32,7 +33,7 @@ abstract class NetworkModule {
 
     @Provides
     @Singleton
-    internal fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -40,4 +41,9 @@ abstract class NetworkModule {
             .baseUrl(baseUrl)
             .build()
 
+    @Provides
+    @Singleton
+    fun provideTempService(retrofit: Retrofit): TempService {
+        return retrofit.create(TempService::class.java)
+    }
 }
