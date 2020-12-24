@@ -5,6 +5,7 @@ import com.wafflestudio.written.BuildConfig
 import com.wafflestudio.written.network.service.PostingService
 import com.wafflestudio.written.network.service.TempService
 import com.wafflestudio.written.network.service.UserService
+import com.wafflestudio.written.network.service.retrofit.PostingRetrofitService
 import com.wafflestudio.written.network.service.retrofit.UserRetrofitService
 import dagger.Module
 import dagger.Provides
@@ -65,6 +66,6 @@ class NetworkModule {
     @Provides
     @Singleton
     fun providePostingService(retrofit: Retrofit): PostingService {
-        return retrofit.create(PostingService::class.java)
+        return PostingService(retrofit.create(PostingRetrofitService::class.java))
     }
 }
