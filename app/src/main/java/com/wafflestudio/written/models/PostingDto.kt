@@ -1,11 +1,14 @@
 package com.wafflestudio.written.models
 
+import com.squareup.moshi.Json
+
 data class PostingDto(
     val writer: PostingDtoWriter,
     val id: Int,
     val title: String,
     val content: String,
-    val created_at: String
+    @field:Json(name = "created_at")
+    val createdAt: String
 )
 
 data class PostingDtoWriter(
