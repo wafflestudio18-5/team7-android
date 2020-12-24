@@ -40,7 +40,7 @@ interface UserRetrofitService {
     @GET("/users/{user_id}/postings")
     fun getPostingsByUserId(
         @Path("user_id") userId: String,
-        @Query("cursor") cursor: String,
+        @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
     )
 

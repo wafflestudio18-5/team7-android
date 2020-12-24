@@ -39,7 +39,7 @@ class UserService(
         pageSize: Int = 5
     ) = userRetrofitService.getPostingsByUserId(
         userId.toString(),
-        cursor.orEmpty(),
+        cursor,
         pageSize.toString()
     )
 
