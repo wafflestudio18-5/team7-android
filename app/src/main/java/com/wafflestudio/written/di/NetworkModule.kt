@@ -2,7 +2,9 @@ package com.wafflestudio.written.di
 
 import com.squareup.moshi.Moshi
 import com.wafflestudio.written.BuildConfig
+import com.wafflestudio.written.network.PostingService
 import com.wafflestudio.written.network.TempService
+import com.wafflestudio.written.network.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,5 +54,17 @@ class NetworkModule {
     @Singleton
     fun provideTempService(retrofit: Retrofit): TempService {
         return retrofit.create(TempService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePostingService(retrofit: Retrofit): PostingService {
+        return retrofit.create(PostingService::class.java)
     }
 }
