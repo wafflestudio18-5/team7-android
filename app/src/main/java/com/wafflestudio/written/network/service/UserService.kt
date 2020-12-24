@@ -11,14 +11,14 @@ class UserService(
 
     // User sign up
     fun signUpUser(
-        facebookid: String = "",
-        accessToken: String = ""
+        facebookid: String,
+        accessToken: String
     ) = userRetrofitService.signUpUser(UserSignUpRequest(facebookid, accessToken))
 
     // User login
     fun loginUser(
-        facebookid: String = "",
-        accessToken: String = ""
+        facebookid: String,
+        accessToken: String
     ) = userRetrofitService.loginUser(UserLoginRequest(facebookid, accessToken))
 
     // User get me
@@ -29,18 +29,18 @@ class UserService(
 
     // User update personal data
     fun updateUserInfo(
-        nickname: String = "",
-        description: String = ""
+        nickname: String,
+        description: String
     ) = userRetrofitService.updateUserInfo(UserUpdateRequest(nickname, description))
 
     fun getPostingByUserId(
-        userId: Int = 0,
-        cursor: Int = 0,
-        page_size: Int = 5
+        userId: Int,
+        cursor: String?,
+        pageSize: Int = 5
     ) = userRetrofitService.getPostingsByUserId(
         userId.toString(),
-        cursor.toString(),
-        page_size.toString()
+        cursor.orEmpty(),
+        pageSize.toString()
     )
 
 

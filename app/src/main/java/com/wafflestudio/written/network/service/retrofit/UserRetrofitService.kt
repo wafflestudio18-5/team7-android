@@ -27,7 +27,7 @@ interface UserRetrofitService {
     // User get {user_id}
     @GET("users/{user_id}")
     fun getUserById(
-        @Path("user_id") user_id: String
+        @Path("user_id") userId: String
     ): Single<UserDto>
 
     // User update personal data
@@ -39,9 +39,9 @@ interface UserRetrofitService {
     // User get {user_id} Posting
     @GET("/users/{user_id}/postings")
     fun getPostingsByUserId(
-        @Path("user_id") user_id: String,
+        @Path("user_id") userId: String,
         @Query("cursor") cursor: String,
-        @Query("page_size") page_size: String
+        @Query("page_size") pageSize: String
     )
 
 }
