@@ -25,7 +25,7 @@ class UserService(
     fun getUserMe() = userRetrofitService.getUserMe()
 
     // User get {user_id}
-    fun getUserById(userId: Int = 0) = userRetrofitService.getUserById(userId.toString())
+    fun getUserById(userId: Int) = userRetrofitService.getUserById(userId.toString())
 
     // User update personal data
     fun updateUserInfo(
