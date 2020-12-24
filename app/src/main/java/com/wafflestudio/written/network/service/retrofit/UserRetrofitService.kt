@@ -1,11 +1,12 @@
-package com.wafflestudio.written.network
+package com.wafflestudio.written.network.service.retrofit
+
 
 import com.wafflestudio.written.models.UserDto
 import com.wafflestudio.written.network.dto.user.*
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 
-interface UserService {
+interface UserRetrofitService {
 
     // User sign up
     @POST("users")
@@ -26,20 +27,21 @@ interface UserService {
     // User get {user_id}
     @GET("users/{user_id}")
     fun getUserById(
-        @Path("user_id") user_id: String = ""
+        @Path("user_id") user_id: String
     ): Single<UserDto>
 
     // User update personal data
     @PUT("users/me")
     fun updateUserInfo(
-        @Body Body: UserUpdateInfoRequest
+        @Body body: UserUpdateRequest
     ): Single<UserDto>
 
     // User get {user_id} Posting
     @GET("/users/{user_id}/postings")
     fun getPostingsByUserId(
-        @Query("cursor") cursor: Int = 0,
-        @Query("page_size") page_size: Int = 5
+        @Path("user_id") user_id: String,
+        @Query("cursor") cursor: String,
+        @Query("page_size") page_size: String
     )
 
 }
