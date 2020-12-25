@@ -27,6 +27,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+            storePassword "grapelounge"
+            keyAlias "written-alias"
+            keyPassword "grapelounge"
+        }
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -44,6 +52,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

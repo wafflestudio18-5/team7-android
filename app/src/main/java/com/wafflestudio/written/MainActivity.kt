@@ -1,11 +1,18 @@
 package com.wafflestudio.written
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.wafflestudio.written.databinding.ActivityMainBinding
-import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context : Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
+    }
 
     private lateinit var binding: ActivityMainBinding
 
