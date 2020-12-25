@@ -1,11 +1,14 @@
-package com.wafflestudio.written
+package com.wafflestudio.written.ui.main
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+import android.os.Bundle
 import com.wafflestudio.written.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -13,6 +16,7 @@ class MainActivity : AppCompatActivity() {
             return Intent(context, MainActivity::class.java)
         }
     }
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 
