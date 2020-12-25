@@ -8,8 +8,6 @@ import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.wafflestudio.written.MainActivity
@@ -26,42 +24,32 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         if (isLoggedIn()) {
             // Show the Activity with the logged in user
-            MainActivity.createIntent(this)
-        }
-//      else{
-//            // Show the Home Activity
-//
-//        }
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-
-        CallbackManager.Factory.create()
-        binding.loginButton.setOnClickListener {
-            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
+            startActivity(MainActivity.createIntent(this))
+            finish()
         }
 
+        callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance()
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
                 override fun onSuccess(loginResult: LoginResult?) {
                     Timber.d("Success Login")
                     // Get User's Info
-                    val accessToken = loginResult?.accessToken
                 }
-
                 override fun onCancel() {
                     Toast.makeText(this@LoginActivity, "Login Cancelled", Toast.LENGTH_LONG).show()
                 }
-
                 override fun onError(exception: FacebookException) {
                     Toast.makeText(this@LoginActivity, exception.message, Toast.LENGTH_LONG).show()
                 }
             })
+
+        binding.loginButton.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
+        }
 
     }
 
@@ -72,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun isLoggedIn(): Boolean {
         val accessToken = AccessToken.getCurrentAccessToken()
-        val isLoggedIn = accessToken != null && !accessToken.isExpired
+        val isLoggedIn = accessToken?.isExpired == true
         return isLoggedIn
     }
 
