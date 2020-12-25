@@ -1,6 +1,7 @@
 package com.wafflestudio.written
 
 import android.app.Application
+import com.facebook.appevents.AppEventsLogger
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -13,6 +14,7 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-    }
 
+        AppEventsLogger.activateApp(this)
+    }
 }
