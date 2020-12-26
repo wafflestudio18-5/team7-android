@@ -1,5 +1,6 @@
 package com.wafflestudio.written.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -16,6 +17,12 @@ import timber.log.Timber
 
 
 class LoginActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context : Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
+    }
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var callbackManager: CallbackManager
