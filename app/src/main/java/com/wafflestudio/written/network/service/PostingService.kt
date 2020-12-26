@@ -20,16 +20,16 @@ class PostingService (
 
     // Posting get {posting_id}
     fun getPostingById(
-        postingId: Int
-    ) = postingRetrofitService.getPostingById(postingId.toString())
+        postingId: Long
+    ) = postingRetrofitService.getPostingById(postingId)
 
     // Posting update
     fun updatePosting(
-        postingId: Int,
+        postingId: Long,
         content: String,
         alignment: String
     ) = postingRetrofitService.updatePosting(
-        postingId.toString(),
+        postingId,
         PostingUpdateRequest(content, alignment)
     )
 

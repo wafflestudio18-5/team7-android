@@ -22,13 +22,13 @@ interface PostingRetrofitService {
     // Posting get {posting_id}
     @GET("postings/{posting_id}")
     fun getPostingById(
-        @Path("posting_id") postingId: String
+        @Path("posting_id") postingId: Long
     ): Single<PostingDto>
 
     // Posting update
     @PUT("postings/{posting_id}")
     fun updatePosting(
-        @Path("posting_id") postingId: String,
+        @Path("posting_id") postingId: Long,
         @Body Body: PostingUpdateRequest
     ): Single<PostingDto>
 
@@ -36,8 +36,5 @@ interface PostingRetrofitService {
     // Posting delete
     @DELETE("postings/{posting_id}")
     fun deletePosting()
-
-
-
 
 }
