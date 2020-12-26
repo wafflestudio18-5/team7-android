@@ -1,4 +1,4 @@
-package com.wafflestudio.written.login
+package com.wafflestudio.written.ui.login
 
 import android.content.Context
 import android.content.Intent

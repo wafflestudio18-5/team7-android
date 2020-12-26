@@ -9,7 +9,7 @@
         android:id="@+id/temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nanum_gothic"
+        android:fontFamily="@font/nanum_myeongjo"
         android:text="my fragment"
         android:textSize="36sp"
         android:textStyle="bold"

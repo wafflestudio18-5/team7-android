@@ -2,4 +2,10 @@
     <string name="app_name">Written</string>
     <string name="facebook_app_id">877838499708984</string>
     <string name="fb_login_protocol_scheme">fb877838499708984</string>
+    <string name="menu_write_text">글쓰기</string>
+    <string name="menu_title_text">글감</string>
+    <string name="menu_my_text">나의 글</string>
+    <string name="menu_subscribe_text">구독</string>
+    <string name="menu_saved_text">보관함</string>
+
 </resources>

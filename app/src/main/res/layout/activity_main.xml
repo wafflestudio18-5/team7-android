@@ -30,62 +30,57 @@
             android:layout_height="match_parent">
 
             <TextView
+                style="@style/MenuText"
                 android:id="@+id/drawer_write"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="75dp"
-                android:fontFamily="@font/nanum_gothic"
-                android:text="글쓰기"
-                android:textSize="30sp"
+                android:text="@string/menu_write_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                style="@style/MenuText"
                 android:id="@+id/drawer_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="25dp"
-                android:fontFamily="@font/nanum_gothic"
-                android:text="글감"
-                android:textSize="30sp"
+                android:text="@string/menu_title_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_write" />
 
             <TextView
+                style="@style/MenuText"
                 android:id="@+id/drawer_my"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="25dp"
-                android:fontFamily="@font/nanum_gothic"
-                android:text="나의 글"
-                android:textSize="30sp"
+                android:text="@string/menu_my_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_title" />
 
             <TextView
+                style="@style/MenuText"
                 android:id="@+id/drawer_subscribe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="25dp"
-                android:fontFamily="@font/nanum_gothic"
-                android:text="구독"
-                android:textSize="30sp"
+                android:text="@string/menu_subscribe_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_my" />
 
             <TextView
+                style="@style/MenuText"
                 android:id="@+id/drawer_saved"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="25dp"
-                android:fontFamily="@font/nanum_gothic"
-                android:text="보관함"
-                android:textSize="30sp"
+                android:text="@string/menu_saved_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_subscribe" />
 

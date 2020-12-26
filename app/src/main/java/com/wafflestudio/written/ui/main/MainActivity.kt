@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<WriteFragment>(R.id.fragment_container_view)
-                addToBackStack("name")
                 drawer_layout.closeDrawer(GravityCompat.START, false)
             }
         }
@@ -65,7 +64,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<TitleFragment>(R.id.fragment_container_view)
-                addToBackStack("name")
                 drawer_layout.closeDrawer(GravityCompat.START, false)
             }
         }
@@ -74,7 +72,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<MyFragment>(R.id.fragment_container_view)
-                addToBackStack("name")
                 drawer_layout.closeDrawer(GravityCompat.START, false)
             }
         }
@@ -83,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<SubscribeFragment>(R.id.fragment_container_view)
-                addToBackStack("name")
                 drawer_layout.closeDrawer(GravityCompat.START, false)
             }
         }
@@ -92,7 +88,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<SavedFragment>(R.id.fragment_container_view)
-                addToBackStack("name")
                 drawer_layout.closeDrawer(GravityCompat.START, false)
             }
         }
@@ -101,3 +96,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+

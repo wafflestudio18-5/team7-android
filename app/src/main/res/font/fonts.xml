@@ -3,13 +3,9 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/nanum_gothic" />
+        android:font="@font/nanum_myeongjo" />
     <font
         android:fontStyle="normal"
-        android:fontWeight="400"
-        android:font="@font/nanum_gothic_bold" />
-    <font
-        android:fontStyle="normal"
-        android:fontWeight="400"
-        android:font="@font/nanum_gothic_extra_bold" />
+        android:fontWeight="700"
+        android:font="@font/nanum_myeongjo_bold" />
 </font-family>
