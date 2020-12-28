@@ -6,4 +6,6 @@ import com.wafflestudio.written.network.service.TempService
 
 class MainViewModel @ViewModelInject constructor(private val service: TempService): ViewModel() {
 
+
+
 }
