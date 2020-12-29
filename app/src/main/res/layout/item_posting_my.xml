@@ -19,7 +19,8 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/nanum_myeongjo_bold"
         android:text="TextView"
-        tools:text="Title"
+        android:textSize="18sp"
+        tools:text="글"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,9 +30,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
+        android:textSize="14sp"
         android:fontFamily="@font/nanum_myeongjo"
         android:text="TextView"
-        tools:text="content\ncontent"
+        tools:text="글 내용\n글 내용"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_text" />
 
@@ -42,9 +44,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="16dp"
+        android:textSize="11sp"
         android:fontFamily="@font/nanum_myeongjo"
         android:text="TextView"
-        tools:text="created time"
+        tools:text="0000년 00월 00일 00시"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content_text"
         app:layout_constraintBottom_toBottomOf="parent"/>
