@@ -1,9 +1,7 @@
 package com.wafflestudio.written.network.service.retrofit
 
 import com.wafflestudio.written.models.PostingDto
-import com.wafflestudio.written.network.dto.posting.PostingTodayResponse
-import com.wafflestudio.written.network.dto.posting.PostingUpdateRequest
-import com.wafflestudio.written.network.dto.posting.PostingWriteRequest
+import com.wafflestudio.written.network.dto.posting.*
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 
@@ -32,9 +30,36 @@ interface PostingRetrofitService {
         @Body Body: PostingUpdateRequest
     ): Single<PostingDto>
 
-    // TODO : api document is not completed yet
     // Posting delete
     @DELETE("postings/{posting_id}")
-    fun deletePosting()
+    fun deletePosting(
+        @Path("posting_id") postingId: Long
+    )
+
+    // Posting scrap
+    @POST("postings/{posting_id}/scrap")
+    fun scrapPosting(
+        @Path("posting_id") postingId: Long
+    )
+
+    // Posting unscrap
+    @POST("postings/{posting_id}/unscrap")
+    fun unscrapPosting(
+        @Path("posting_id") postingId: Long
+    )
+
+    // Posting get scrapped
+    @GET("postings/scrapped")
+    fun getScrappedPostings(
+        @Query("cursor") cursor: String?,
+        @Query("page_size") pageSize: String
+    ): Single<PostingScrappedResponse>
+
+    // Posting get subscribed
+    @GET("postings/subscribed")
+    fun getSubscribedPostings(
+        @Query("cursor") cursor: String?,
+        @Query("page_size") pageSize: String
+    ): Single<PostingSubscribedResponse>
 
 }
