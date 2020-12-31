@@ -42,6 +42,6 @@ interface UserRetrofitService {
         @Path("user_id") userId: String,
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
-    )
+    ): Single<UserGetPostingsByIdResponse>
 
 }
