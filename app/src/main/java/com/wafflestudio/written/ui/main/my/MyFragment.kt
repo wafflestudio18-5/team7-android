@@ -54,6 +54,7 @@ class MyFragment : Fragment() {
                         myViewModel.cursor = it.cursor
                         myViewModel.hasNextPosting = it.hasNext
                         myPostingAdapter.postings.union(it.postings)
+                        myPostingAdapter.notifyDataSetChanged()
                     }, {
                         loadingPostings = false
                         // TODO : ERROR HANDLING
@@ -80,13 +81,13 @@ class MyFragment : Fragment() {
                                 myViewModel.cursor = it.cursor
                                 myViewModel.hasNextPosting = it.hasNext
                                 myPostingAdapter.postings.union(it.postings)
+                                myPostingAdapter.notifyDataSetChanged()
                                 loadingPostings = false
                             }, {
                                 loadingPostings = false
                                 // TODO : ERROR HANDLING
                             })
                     }
-
                 }
 
             }
@@ -94,8 +95,6 @@ class MyFragment : Fragment() {
 
 
     }
-
-
 
 
 }
