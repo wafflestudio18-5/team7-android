@@ -4,8 +4,10 @@ import com.squareup.moshi.Moshi
 import com.wafflestudio.written.BuildConfig
 import com.wafflestudio.written.network.service.PostingService
 import com.wafflestudio.written.network.service.TempService
+import com.wafflestudio.written.network.service.TitleService
 import com.wafflestudio.written.network.service.UserService
 import com.wafflestudio.written.network.service.retrofit.PostingRetrofitService
+import com.wafflestudio.written.network.service.retrofit.TitleRetrofitService
 import com.wafflestudio.written.network.service.retrofit.UserRetrofitService
 import dagger.Module
 import dagger.Provides
@@ -62,10 +64,15 @@ class NetworkModule {
         return UserService(retrofit.create(UserRetrofitService::class.java))
     }
 
-    // TODO : Make PostingRetrofitService and change return value
     @Provides
     @Singleton
     fun providePostingService(retrofit: Retrofit): PostingService {
         return PostingService(retrofit.create(PostingRetrofitService::class.java))
+    }
+
+    @Provides
+    @Singleton
+    fun provideTitleService(retrofit: Retrofit): TitleService {
+        return TitleService(retrofit.create(TitleRetrofitService::class.java))
     }
 }
