@@ -10,8 +10,7 @@ import com.wafflestudio.written.R
 import com.wafflestudio.written.models.PostingDto
 import kotlinx.android.synthetic.main.item_posting_my.view.*
 
-class MyPostingAdapter(context: Context) : RecyclerView.Adapter<myPostingViewHolder>() {
-    private val context = context
+class MyPostingAdapter(private val context: Context) : RecyclerView.Adapter<myPostingViewHolder>() {
     var postings: List<PostingDto> = emptyList()
     var hasNext: Boolean = false
 
@@ -41,6 +40,4 @@ class myPostingViewHolder(view: View, context: Context) : RecyclerView.ViewHolde
         contentText.text = posting.content      // TODO : 최대 2줄까지 들어가도록 수정
         createdAtText.text = posting.createdAt  // TODO : String 수정해서 넣기
     }
-
-
 }

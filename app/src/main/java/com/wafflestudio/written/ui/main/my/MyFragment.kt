@@ -9,9 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.FragmentMyBinding
+import com.wafflestudio.written.models.PostingDto
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_my.*
+import timber.log.Timber
 
 class MyFragment : Fragment() {
 
@@ -19,7 +23,8 @@ class MyFragment : Fragment() {
     private val myViewModel: MyViewModel by viewModels()
     private lateinit var myPostingAdapter: MyPostingAdapter
     private lateinit var myLayoutManager: LinearLayoutManager
-    private var loadingPostings: Boolean = false
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,62 +43,46 @@ class MyFragment : Fragment() {
         my_postings_recyclerview.layoutManager = myLayoutManager
         my_postings_recyclerview.adapter = myPostingAdapter
 
+        myViewModel.observePostings().subscribe {
+            myPostingAdapter.postings = myPostingAdapter.postings.plus(it)
+        }
+
+        // get initial values
         myViewModel.getUser()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                myViewModel.user = it
-                binding.nicknameText.text = it.nickname
-                binding.descriptionText.text = it.description
-
-                loadingPostings = true
-                myViewModel.getMyPostings(userId = it.id, cursor = null, pageSize = 20)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        myViewModel.cursor = it.cursor
-                        myViewModel.hasNextPosting = it.hasNext
-                        myPostingAdapter.postings.union(it.postings)
-                        myPostingAdapter.notifyDataSetChanged()
-                    }, {
-                        loadingPostings = false
-                        // TODO : ERROR HANDLING
-                    })
-
+            .flatMap { user ->
+                myViewModel.getMyPostings(cursor = null)
+                    .map { user }
+            }
+            .subscribe({ user ->
+                binding.nicknameText.text = user.nickname
+                binding.descriptionText.text = user.description
             }, {
-                // TODO : ERROR HANDLING
+                Timber.d(it)
             })
 
         my_postings_recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val totalPostings = myPostingAdapter.itemCount
-                val lastVisiblePostingPosition = myLayoutManager.findLastCompletelyVisibleItemPosition()
+                val lastVisiblePostingPosition =
+                    myLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                if(lastVisiblePostingPosition >= totalPostings - 1) {
-                    if(!loadingPostings)
-                    {
-                        loadingPostings = true
-                        myViewModel.getMyPostings(userId = myViewModel.user.id, cursor = myViewModel.cursor, pageSize = 20)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                myViewModel.cursor = it.cursor
-                                myViewModel.hasNextPosting = it.hasNext
-                                myPostingAdapter.postings.union(it.postings)
-                                myPostingAdapter.notifyDataSetChanged()
-                                loadingPostings = false
-                            }, {
-                                loadingPostings = false
-                                // TODO : ERROR HANDLING
-                            })
-                    }
+                if (lastVisiblePostingPosition >= totalPostings - 1) {
+                    myViewModel.getNextPostings()
                 }
 
             }
         })
 
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        compositeDisposable.dispose()
     }
 
 
