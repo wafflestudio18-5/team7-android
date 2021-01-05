@@ -7,5 +7,9 @@
     <string name="menu_my_text">나의 글</string>
     <string name="menu_subscribe_text">구독</string>
     <string name="menu_saved_text">보관함</string>
+    <string name="write_new_edit_text">당신의 생각을 들려주세요.</string>
+    <string name="copy_snackbar_text">글이 클립보드에 복사되었습니다.</string>
+    <string name="close_text">닫기</string>
+    <string name="completed_text">완료</string>
 
 </resources>
