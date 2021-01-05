@@ -44,7 +44,8 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
-        moshi: Moshi): Retrofit =
+        moshi: Moshi
+    ): Retrofit =
         Retrofit.Builder()
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
