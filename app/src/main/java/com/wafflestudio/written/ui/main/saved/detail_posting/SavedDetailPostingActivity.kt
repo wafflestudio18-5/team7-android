@@ -1,25 +1,28 @@
-package com.wafflestudio.written.ui.main.subscribe.detail_posting
+package com.wafflestudio.written.ui.main.saved.detail_posting
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.wafflestudio.written.databinding.ActivitySubscribeDetailPostingBinding
-import com.wafflestudio.written.models.PostingDto
+import com.wafflestudio.written.databinding.ActivitySavedDetailPostingBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_subscribe_detail_posting.*
-import kotlinx.android.synthetic.main.subscribe_bottom_app_bar_detail_posting.view.*
+import kotlinx.android.synthetic.main.activity_my_detail_posting.bottom_app_bar
+import kotlinx.android.synthetic.main.activity_my_detail_posting.content_text
+import kotlinx.android.synthetic.main.activity_my_detail_posting.created_at_text
+import kotlinx.android.synthetic.main.activity_my_detail_posting.title_text
+import kotlinx.android.synthetic.main.activity_my_detail_posting.writer_text
+import kotlinx.android.synthetic.main.saved_bottom_app_bar_detail_posting.view.*
 import timber.log.Timber
 
-class SubscribeDetailPostingActivity : AppCompatActivity() {
+class SavedDetailPostingActivity : AppCompatActivity() {
 
-    private val viewModel: SubscribeDetailPostingViewModel by viewModels()
-    private lateinit var binding: ActivitySubscribeDetailPostingBinding
-
+    private val viewModel: SavedDetailPostingViewModel by viewModels()
+    private lateinit var binding: ActivitySavedDetailPostingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySubscribeDetailPostingBinding.inflate(layoutInflater)
+
+        binding = ActivitySavedDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val intent = intent
@@ -28,7 +31,7 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
         bottom_app_bar.writer_text.text = viewModel.posting.writer.nickname
         title_text.text = viewModel.posting.title
         content_text.text = viewModel.posting.content
-        writer_text.text = viewModel.posting.title
+        writer_text.text = viewModel.posting.writer.nickname
         created_at_text.text = viewModel.posting.createdAt
 
         // TODO: Bottom bar OnClickListener
@@ -40,15 +43,11 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
                 viewModel.posting = it
                 title_text.text = it.title
                 content_text.text = it.content
-                writer_text.text = it.title
+                writer_text.text = it.writer.nickname
                 created_at_text.text = it.createdAt
             }, {
                 Timber.d(it)
             })
 
-        bottom_app_bar.back_text.setOnClickListener {
-            finish()
-        }
     }
-
 }
