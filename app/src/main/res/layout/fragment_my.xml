@@ -2,20 +2,84 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F7F7F7">
 
     <TextView
-        android:id="@+id/temp"
+        android:id="@+id/nickname_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanum_myeongjo_bold"
+        tools:text="필명"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/description_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanum_myeongjo"
-        android:text="my fragment"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="소개글"
+        android:textSize="13sp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nickname_text" />
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/description_text"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_myeongjo"
+            android:text="나의 글"
+            android:textSize="16sp"
+            android:layout_gravity="start"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/written_opened_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textAlignment="textEnd"
+            android:fontFamily="@font/nanum_myeongjo"
+            tools:text="0편 씀 / 0편 공개"
+            android:layout_marginEnd="16dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ACACAC"
+        app:layout_constraintTop_toBottomOf="@id/menu"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_postings_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_posting_my"
+        app:layout_constraintTop_toBottomOf="@id/divide_line"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
