@@ -9,23 +9,23 @@ import retrofit2.http.*
 interface PostingRetrofitService {
 
     // Posting get Today
-    @GET("postings/today")
+    @GET("postings/today/")
     fun getPostingToday(): Single<PostingTodayResponse>
 
     // Posting write
-    @POST("postings")
+    @POST("postings/")
     fun writePosting(
         @Body Body: PostingWriteRequest
     ): Single<PostingDto>
 
     // Posting get {posting_id}
-    @GET("postings/{posting_id}")
+    @GET("postings/{posting_id}/")
     fun getPostingById(
         @Path("posting_id") postingId: Long
     ): Single<PostingDto>
 
     // Posting update
-    @PUT("postings/{posting_id}")
+    @PUT("postings/{posting_id}/")
     fun updatePosting(
         @Path("posting_id") postingId: Long,
         @Body Body: PostingUpdateRequest
@@ -62,5 +62,4 @@ interface PostingRetrofitService {
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
     ): Single<PostingSubscribedResponse>
-
 }
