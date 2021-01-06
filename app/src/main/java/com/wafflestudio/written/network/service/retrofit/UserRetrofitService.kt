@@ -3,6 +3,7 @@ package com.wafflestudio.written.network.service.retrofit
 
 import com.wafflestudio.written.models.UserDto
 import com.wafflestudio.written.network.dto.user.*
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.*
 
@@ -42,6 +43,6 @@ interface UserRetrofitService {
         @Path("user_id") userId: String,
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
-    )
+    ): Single<UserGetPostingsByIdResponse>
 
 }
