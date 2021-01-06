@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detail_posting.DetailPostingActivity">
+    tools:context=".ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity">
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/background">
+        android:backgroundTint="@color/background"
+        app:hideOnScroll="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,31 +19,42 @@
             >
 
             <TextView
+                android:id="@+id/back_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanum_myeongjo"
                 tools:text="< 뒤로"
                 android:layout_gravity="left"/>
 
-            <view
+            <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/writer_posting_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nanum_myeongjo_bold"
-                tools:text="필명"/>
+                android:layout_marginEnd="20dp">
+
+                <TextView
+                    android:id="@+id/writer_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_myeongjo_bold"
+                    tools:text="필명"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_myeongjo"
+                    android:text="의 글"/>
+
+            </LinearLayout>
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nanum_myeongjo"
-                android:text="의 글"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
+                android:id="@+id/subscribe_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanum_myeongjo"

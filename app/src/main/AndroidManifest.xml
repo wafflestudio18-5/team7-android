@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Written">
-        <activity android:name=".ui.detail_posting.DetailPostingActivity"></activity>
+        <activity android:name=".ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity"></activity>
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/AppTheme.Launcher">

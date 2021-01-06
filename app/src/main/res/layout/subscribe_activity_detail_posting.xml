@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detail_posting.DetailPostingActivity"
+    tools:context=".ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity"
     android:background="@color/background">
 
     <include
-        layout="@layout/bottom_app_bar_detail_posting"
+        android:id="@+id/bottom_app_bar"
+        layout="@layout/subscribe_bottom_app_bar_detail_posting"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
