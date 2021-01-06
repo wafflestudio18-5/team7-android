@@ -33,9 +33,24 @@ class PostingService (
         PostingUpdateRequest(content, alignment)
     )
 
-    // TODO : api document is not completed yet
     // Posting delete
-    fun deletePosting() = postingRetrofitService.deletePosting()
+    fun deletePosting(postingId: Long) = postingRetrofitService.deletePosting(postingId)
 
+    // Posting scrap
+    fun scrapPosting(postingId: Long) = postingRetrofitService.scrapPosting(postingId)
 
+    // Posting unscrap
+    fun unscrapPosting(postingId: Long) = postingRetrofitService.unscrapPosting(postingId)
+
+    // Posting get scrapped
+    fun getScrappedPostings(
+        cursor: String?,
+        pageSize: Int = 5
+    ) = postingRetrofitService.getScrappedPostings(cursor, pageSize.toString())
+
+    // Posting get subscribed
+    fun getSubscribedPostings(
+        cursor: String?,
+        pageSize: Int = 5
+    ) = postingRetrofitService.getSubscribedPostings(cursor, pageSize.toString())
 }
