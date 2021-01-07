@@ -1,5 +1,7 @@
 package com.wafflestudio.written.ui.writer
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,11 +12,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_writer.*
 import timber.log.Timber
 
 @AndroidEntryPoint
 class WriterActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context : Context): Intent {
+            return Intent(context, WriterActivity::class.java)
+        }
+    }
 
     private val writerViewModel: WriterViewModel by viewModels()
     private lateinit var binding: ActivityWriterBinding

@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivitySubscribeDetailPostingBinding
 import com.wafflestudio.written.models.PostingDto
+import com.wafflestudio.written.ui.writer.WriterActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_subscribe_detail_posting.*
 import kotlinx.android.synthetic.main.subscribe_bottom_app_bar_detail_posting.view.*
@@ -26,6 +29,8 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
     private val viewModel: SubscribeDetailPostingViewModel by viewModels()
     private lateinit var binding: ActivitySubscribeDetailPostingBinding
 
+    private val compositeDisposable = CompositeDisposable()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +47,33 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
             return
         }
 
+        viewModel.writerId = posting.writer.id
+
         viewModel.setPosting(posting)
         viewModel.getPostingDetail(posting.id)
 
         binding.bottomAppBar.backText.setOnClickListener {
             finish()
         }
+
+        binding.bottomAppBar.writerPostingText.setOnClickListener {
+            val intent = WriterActivity.createIntent(this)
+            intent.putExtra("writerId", viewModel.writerId)
+            startActivity(intent)
+        }
+
+        binding.bottomAppBar.scrapText.setOnClickListener {
+            viewModel.scrapPosting()
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Toast.makeText(this, "글을 담아갔습니다.", Toast.LENGTH_SHORT).show()
+                }, {
+                    Timber.d(it)
+                })
+                .also { compositeDisposable.add(it) }
+        }
+
+
     }
 
     private fun modelView(posting: PostingDto) {
@@ -58,4 +84,8 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
         binding.createdAtText.text = posting.createdAt
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
 }
