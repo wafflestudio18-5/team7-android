@@ -45,11 +45,11 @@ class WriterDetailPostingActivity : AppCompatActivity() {
 
         viewModel.getPostingDetail(posting.id)
 
-        bottom_app_bar.back_text.setOnClickListener {
+        binding.bottomAppBar.backText.setOnClickListener {
             finish()
         }
 
-        bottom_app_bar.writer_posting_text.setOnClickListener {
+        binding.bottomAppBar.writerPostingText.setOnClickListener {
             finish()
         }
     }
