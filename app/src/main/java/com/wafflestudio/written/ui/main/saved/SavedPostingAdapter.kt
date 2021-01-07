@@ -18,7 +18,7 @@ class SavedPostingAdapter(private val context: Context) : RecyclerView.Adapter<S
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedPostingViewHolder =
         LayoutInflater.from(parent.context)
             .inflate(R.layout.item_posting_saved, parent, false)
-            .let { SavedPostingViewHolder(it, context) }
+            .let { SavedPostingViewHolder(it) }
 
 
     override fun getItemCount(): Int {
@@ -28,26 +28,23 @@ class SavedPostingAdapter(private val context: Context) : RecyclerView.Adapter<S
     override fun onBindViewHolder(holder: SavedPostingViewHolder, position: Int) {
         val posting = postings[position]
         holder.render(posting)
-    }
-}
 
-class SavedPostingViewHolder(view: View, context: Context) : RecyclerView.ViewHolder(view) {
-    private var titleText: TextView = view.title_text
-    private var contentText: TextView = view.content_text
-    private var createdAtText: TextView = view.created_at_text
-    private var postingData: PostingDto? = null
-
-    init {
-        val itemView = super.itemView
-        itemView.setOnClickListener {
-            val intent = Intent(context, SavedDetailPostingActivity::class.java)
-            intent.putExtra("posting", postingData)
+        holder.itemView.setOnClickListener {
+            val intent = SavedDetailPostingActivity.createIntent(context)
+            intent.putExtra("posting", posting)
             context.startActivity(intent)
         }
     }
+}
+
+class SavedPostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private var titleText: TextView = view.title_text
+    private var contentText: TextView = view.content_text
+    private var createdAtText: TextView = view.created_at_text
+
+
 
     fun render(posting: PostingDto) {
-        postingData = posting
         titleText.text = posting.title
         contentText.text = modifyContent(posting.content)
         createdAtText.text = posting.createdAt // TODO

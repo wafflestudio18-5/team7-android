@@ -26,7 +26,7 @@ class SavedViewModel @ViewModelInject constructor(
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
 
     fun getNextPostings() {
-        if(!loadingPostings and hasNext) {
+        if(!loadingPostings && hasNext) {
             loadingPostings = true
             postingService.getScrappedPostings(cursor)
                 .subscribeOn(Schedulers.io())

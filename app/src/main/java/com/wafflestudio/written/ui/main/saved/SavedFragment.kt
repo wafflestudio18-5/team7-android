@@ -38,8 +38,8 @@ class SavedFragment : Fragment() {
 
         savedPostingAdapter = SavedPostingAdapter(this.requireContext())
         savedLayoutManager = LinearLayoutManager(this.context)
-        saved_postings_recyclerview.layoutManager = savedLayoutManager
-        saved_postings_recyclerview.adapter = savedPostingAdapter
+        binding.savedPostingsRecyclerview.layoutManager = savedLayoutManager
+        binding.savedPostingsRecyclerview.adapter = savedPostingAdapter
 
         savedViewModel.observePostings().subscribe {
             savedPostingAdapter.postings = it
@@ -53,7 +53,7 @@ class SavedFragment : Fragment() {
             })
             .also { compositeDisposable.add(it) }
 
-        saved_postings_recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.savedPostingsRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val totalPostings = savedPostingAdapter.itemCount

@@ -1,17 +1,27 @@
 package com.wafflestudio.written.ui.main.subscribe.detail_posting
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivitySubscribeDetailPostingBinding
 import com.wafflestudio.written.models.PostingDto
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_subscribe_detail_posting.*
 import kotlinx.android.synthetic.main.subscribe_bottom_app_bar_detail_posting.view.*
 import timber.log.Timber
 
+@AndroidEntryPoint
 class SubscribeDetailPostingActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context : Context): Intent {
+            return Intent(context, SubscribeDetailPostingActivity::class.java)
+        }
+    }
 
     private val viewModel: SubscribeDetailPostingViewModel by viewModels()
     private lateinit var binding: ActivitySubscribeDetailPostingBinding
@@ -22,33 +32,30 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
         binding = ActivitySubscribeDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.observePosting().subscribe {
+            modelView(it)
+        }
+
         val intent = intent
-        viewModel.posting = intent.getParcelableExtra("posting")!!
+        val posting: PostingDto = intent.getParcelableExtra("posting")?: run {
+            finish()
+            return
+        }
 
-        bottom_app_bar.writer_text.text = viewModel.posting.writer.nickname
-        title_text.text = viewModel.posting.title
-        content_text.text = viewModel.posting.content
-        writer_text.text = viewModel.posting.title
-        created_at_text.text = viewModel.posting.createdAt
+        viewModel.setPosting(posting)
+        viewModel.getPostingDetail(posting.id)
 
-        // TODO: Bottom bar OnClickListener
-
-        viewModel.getPostingDetail(viewModel.posting.id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewModel.posting = it
-                title_text.text = it.title
-                content_text.text = it.content
-                writer_text.text = it.title
-                created_at_text.text = it.createdAt
-            }, {
-                Timber.d(it)
-            })
-
-        bottom_app_bar.back_text.setOnClickListener {
+        binding.bottomAppBar.backText.setOnClickListener {
             finish()
         }
+    }
+
+    private fun modelView(posting: PostingDto) {
+        binding.bottomAppBar.writerText.text = posting.writer.nickname
+        binding.titleText.text = posting.title
+        binding.contentText.text = posting.content
+        binding.writerText.text = posting.writer.nickname
+        binding.createdAtText.text = posting.createdAt
     }
 
 }

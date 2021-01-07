@@ -18,7 +18,7 @@ class MyPostingAdapter(private val context: Context) : RecyclerView.Adapter<MyPo
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPostingViewHolder =
         LayoutInflater.from(parent.context)
             .inflate(R.layout.item_posting_my, parent, false)
-            .let { MyPostingViewHolder(it, context) }
+            .let { MyPostingViewHolder(it) }
 
     override fun getItemCount(): Int {
         return postings.size
@@ -27,27 +27,22 @@ class MyPostingAdapter(private val context: Context) : RecyclerView.Adapter<MyPo
     override fun onBindViewHolder(holder: MyPostingViewHolder, position: Int) {
         val posting = postings[position]
         holder.render(posting)
-    }
-}
 
-class MyPostingViewHolder(view: View, context: Context) : RecyclerView.ViewHolder(view) {
-    private var titleText: TextView = view.title_text
-    private var contentText: TextView = view.content_text
-    private var createdAtText: TextView = view.created_at_text
-    private var postingData: PostingDto? = null
-
-    init {
-        val itemView = super.itemView
-        itemView.setOnClickListener {
-            val pos = adapterPosition
-            val intent = Intent(context, MyDetailPostingActivity::class.java)
-            intent.putExtra("posting", postingData)
+        holder.itemView.setOnClickListener {
+            val intent = MyDetailPostingActivity.createIntent(context)
+            intent.putExtra("posting", posting)
             context.startActivity(intent)
         }
     }
+}
+
+class MyPostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    private var titleText: TextView = view.title_text
+    private var contentText: TextView = view.content_text
+    private var createdAtText: TextView = view.created_at_text
+
 
     fun render(posting: PostingDto) {
-        postingData = posting
         titleText.text = posting.title
         contentText.text = modifyContent(posting.content)
         createdAtText.text = posting.createdAt  // TODO : String 수정해서 넣기

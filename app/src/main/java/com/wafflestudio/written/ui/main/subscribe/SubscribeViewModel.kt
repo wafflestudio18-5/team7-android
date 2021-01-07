@@ -23,7 +23,7 @@ class SubscribeViewModel @ViewModelInject constructor(private val postingService
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
 
     fun getNextPostings() {
-        if(!loadingPostings and hasNext) {
+        if(!loadingPostings && hasNext) {
             loadingPostings = true
             postingService.getSubscribedPostings(cursor)
                 .subscribeOn(Schedulers.io())

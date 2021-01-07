@@ -8,14 +8,15 @@ import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivityMyDetailPostingBinding
 import com.wafflestudio.written.models.PostingDto
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_my_detail_posting.*
-import kotlinx.android.synthetic.main.my_bottom_app_bar_detail_posting.view.*
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MyDetailPostingActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context : Context): Intent {
+            return Intent(context, MyDetailPostingActivity::class.java)
+        }
+    }
 
     private val viewModel: MyDetailPostingViewModel by viewModels()
     private lateinit var binding: ActivityMyDetailPostingBinding
@@ -34,9 +35,17 @@ class MyDetailPostingActivity : AppCompatActivity() {
             finish()
             return
         }
-        viewModel.setPosting(posting)
 
+        viewModel.setPosting(posting)
         viewModel.getPostingDetail(posting.id)
+
+        binding.bottomAppBar.backText.setOnClickListener {
+            finish()
+        }
+
+        binding.bottomAppBar.publicText.setOnClickListener {
+
+        }
 
 
         // TODO: Bottom bar OnClickListener

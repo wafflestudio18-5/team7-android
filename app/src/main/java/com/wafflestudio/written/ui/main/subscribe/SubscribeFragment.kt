@@ -38,8 +38,8 @@ class SubscribeFragment : Fragment() {
 
         subscribePostingAdapter = SubscribePostingAdapter(this.requireContext())
         subscribeLayoutManager = LinearLayoutManager(this.context)
-        subscribe_recyclerview.layoutManager = subscribeLayoutManager
-        subscribe_recyclerview.adapter = subscribePostingAdapter
+        binding.subscribeRecyclerview.layoutManager = subscribeLayoutManager
+        binding.subscribeRecyclerview.adapter = subscribePostingAdapter
 
         subscribeViewModel.observePostings().subscribe {
             subscribePostingAdapter.postings = it
@@ -53,7 +53,7 @@ class SubscribeFragment : Fragment() {
             })
             .also { compositeDisposable.add(it) }
 
-        subscribe_recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.subscribeRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val totalPostings = subscribePostingAdapter.itemCount
