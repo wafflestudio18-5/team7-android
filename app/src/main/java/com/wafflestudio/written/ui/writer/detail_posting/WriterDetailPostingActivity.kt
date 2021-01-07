@@ -3,7 +3,7 @@ package com.wafflestudio.written.ui.writer.detail_posting
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.wafflestudio.written.databinding.ActivityWriterBinding
+import com.wafflestudio.written.databinding.ActivityWriterDetailPostingBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -14,36 +14,40 @@ import timber.log.Timber
 class WriterDetailPostingActivity : AppCompatActivity() {
 
     private val viewModel: WriterDetailPostingViewModel by viewModels()
-    private lateinit var binding: ActivityWriterBinding
+    private lateinit var binding: ActivityWriterDetailPostingBinding
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityWriterBinding.inflate(layoutInflater)
+        binding = ActivityWriterDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val intent = intent
-        viewModel.posting = intent.getParcelableExtra("posting")!!
+        viewModel.posting = intent.getParcelableExtra("posting")?: run {
+            finish()
+            return
+        }
 
-        bottom_app_bar.writer_text.text = viewModel.posting.writer.nickname
-        title_text.text = viewModel.posting.title
-        content_text.text = viewModel.posting.content
-        writer_text.text = viewModel.posting.title
-        created_at_text.text = viewModel.posting.createdAt
+        binding.bottomAppBar.writerText.text = viewModel.posting.writer.nickname
+        binding.titleText.text = viewModel.posting.title
+        binding.contentText.text = viewModel.posting.content
+        binding.writerText.text = viewModel.posting.writer.nickname
+        binding.createdAtText.text = viewModel.posting.createdAt
 
         viewModel.getPostingDetail(viewModel.posting.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewModel.posting = it
-                title_text.text = it.title
-                content_text.text = it.content
-                writer_text.text = it.title
-                created_at_text.text = it.createdAt
+                binding.titleText.text = viewModel.posting.title
+                binding.contentText.text = viewModel.posting.content
+                binding.writerText.text = viewModel.posting.writer.nickname
+                binding.createdAtText.text = viewModel.posting.createdAt
             }, {
                 Timber.d(it)
             })
+            .also { compositeDisposable.add(it) }
 
         bottom_app_bar.back_text.setOnClickListener {
             finish()
@@ -52,5 +56,10 @@ class WriterDetailPostingActivity : AppCompatActivity() {
         bottom_app_bar.writer_posting_text.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 }

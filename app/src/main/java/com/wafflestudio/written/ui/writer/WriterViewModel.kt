@@ -42,7 +42,7 @@ class WriterViewModel @ViewModelInject constructor(
     }
 
     fun getNextPostings(writerId: Int) {
-        if(!loadingPostings and hasNext) {
+        if(!loadingPostings && hasNext) {
             loadingPostings = true
             userService.getPostingByUserId(writerId, cursor)
                 .subscribeOn(Schedulers.io())

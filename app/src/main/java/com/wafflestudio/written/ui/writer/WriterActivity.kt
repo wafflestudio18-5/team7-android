@@ -31,8 +31,8 @@ class WriterActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                nickname_text.text = it.nickname
-                description_text.text = it.description
+                binding.nicknameText.text = it.nickname
+                binding.descriptionText.text = it.description
             }, {
                 Timber.d(it)
             })
