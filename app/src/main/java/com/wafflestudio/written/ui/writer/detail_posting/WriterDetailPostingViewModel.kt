@@ -32,6 +32,8 @@ class WriterDetailPostingViewModel @ViewModelInject constructor(private val post
         postingSubject.onNext(posting)
     }
 
+    fun scrapPosting() = postingService.scrapPosting(postingSubject.value.id.toLong())
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivityWriterDetailPostingBinding
 import com.wafflestudio.written.models.PostingDto
@@ -51,6 +52,18 @@ class WriterDetailPostingActivity : AppCompatActivity() {
 
         binding.bottomAppBar.writerPostingText.setOnClickListener {
             finish()
+        }
+
+        binding.bottomAppBar.scrapText.setOnClickListener {
+            viewModel.scrapPosting()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Toast.makeText(this, "글을 담아갔습니다.", Toast.LENGTH_SHORT).show()
+                }, {
+                    Timber.d(it)
+                })
+                .also { compositeDisposable.add(it) }
         }
     }
 
