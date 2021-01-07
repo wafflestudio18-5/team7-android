@@ -27,10 +27,11 @@ class PostingService (
     fun updatePosting(
         postingId: Long,
         content: String,
-        alignment: String
+        alignment: String,
+        isPublic: Boolean
     ) = postingRetrofitService.updatePosting(
         postingId,
-        PostingUpdateRequest(content, alignment)
+        PostingUpdateRequest(content, alignment, isPublic)
     )
 
     // Posting delete

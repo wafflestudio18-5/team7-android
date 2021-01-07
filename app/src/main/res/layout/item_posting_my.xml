@@ -52,5 +52,22 @@
         app:layout_constraintTop_toBottomOf="@+id/content_text"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <TextView
+        android:id="@+id/public_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:fontFamily="@font/nanum_myeongjo"
+        app:layout_constraintStart_toEndOf="@id/created_at_text"
+        app:layout_constraintTop_toTopOf="@id/created_at_text"
+        app:layout_constraintBottom_toBottomOf="@id/created_at_text"
+        android:layout_marginStart="3dp"
+        android:text="공개"
+        android:background="@drawable/layout_public_background"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

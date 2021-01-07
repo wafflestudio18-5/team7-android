@@ -14,6 +14,8 @@ class SavedDetailPostingViewModel @ViewModelInject constructor(private val posti
 
     private val postingSubject = BehaviorSubject.create<PostingDto>()
     private val compositeDisposable = CompositeDisposable()
+    var writerId: Int = -1
+    var postingId: Int = -1
 
     fun observePosting(): Observable<PostingDto> = postingSubject.hide()
 
@@ -29,8 +31,12 @@ class SavedDetailPostingViewModel @ViewModelInject constructor(private val posti
     }
 
     fun setPosting(posting: PostingDto) {
+        writerId = posting.writer.id
+        postingId = posting.id
         postingSubject.onNext(posting)
     }
+
+    fun unscrapPosting() = postingService.unscrapPosting(postingId.toLong())
 
     override fun onCleared() {
         super.onCleared()

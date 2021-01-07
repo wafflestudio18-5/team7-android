@@ -10,9 +10,11 @@ data class PostingDto(
     val id: Int,
     val title: String,
     val content: String,
-    @field:Json(name = "created_at")
+    @Json(name = "created_at")
     val createdAt: String,
-    val alignment: String
+    val alignment: String,
+    @Json(name = "is_public")
+    val isPublic: Boolean
 ): Parcelable
 
 @Parcelize

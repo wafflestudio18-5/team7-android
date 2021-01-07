@@ -47,8 +47,6 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
             return
         }
 
-        viewModel.writerId = posting.writer.id
-
         viewModel.setPosting(posting)
         viewModel.getPostingDetail(posting.id)
 
@@ -65,6 +63,7 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
         binding.bottomAppBar.scrapText.setOnClickListener {
             viewModel.scrapPosting()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Toast.makeText(this, "글을 담아갔습니다.", Toast.LENGTH_SHORT).show()
                 }, {
