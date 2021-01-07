@@ -12,7 +12,7 @@ class TitleService(
         official: String,
         query: String,
         cursor: String?,
-        pageSize: Int = 5
+        pageSize: Int = 10
     ) = titleRetrofitService.getTitles(time, order, official, query, cursor, pageSize.toString())
 
     fun getPostingsByTitleId(

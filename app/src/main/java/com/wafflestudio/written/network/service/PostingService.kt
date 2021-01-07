@@ -45,12 +45,12 @@ class PostingService (
     // Posting get scrapped
     fun getScrappedPostings(
         cursor: String?,
-        pageSize: Int = 5
+        pageSize: Int = 10
     ) = postingRetrofitService.getScrappedPostings(cursor, pageSize.toString())
 
     // Posting get subscribed
     fun getSubscribedPostings(
         cursor: String?,
-        pageSize: Int = 5
+        pageSize: Int = 10
     ) = postingRetrofitService.getSubscribedPostings(cursor, pageSize.toString())
 }

@@ -36,7 +36,7 @@ class UserService(
     fun getPostingByUserId(
         userId: Int,
         cursor: String?,
-        pageSize: Int = 20
+        pageSize: Int = 10
     ) = userRetrofitService.getPostingsByUserId(
         userId.toString(),
         cursor,
