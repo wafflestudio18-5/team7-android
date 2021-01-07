@@ -32,6 +32,27 @@ class MyDetailPostingViewModel @ViewModelInject constructor(private val postingS
         postingSubject.onNext(posting)
     }
 
+    fun checkPublic() = postingSubject.value.isPublic
+
+    fun changePublic() {
+        postingService.updatePosting(
+            postingId = postingSubject.value.id.toLong(),
+            content = postingSubject.value.content,
+            alignment = postingSubject.value.alignment,
+            isPublic = !postingSubject.value.isPublic
+        )
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                setPosting(it)
+            }, {
+                Timber.d(it)
+            })
+            .also { compositeDisposable.add(it) }
+    }
+
+    fun deletePosting() = postingService.deletePosting(postingSubject.value.id.toLong())
+
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()

@@ -37,6 +37,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanum_myeongjo"
                 android:text="공개"
+                android:textColor="@color/white"
+                android:background="@drawable/layout_public_background"
                 android:layout_gravity="right"
                 android:layout_marginEnd="20dp"/>
 

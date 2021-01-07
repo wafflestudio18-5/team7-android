@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -40,12 +42,21 @@ class MyPostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private var titleText: TextView = view.title_text
     private var contentText: TextView = view.content_text
     private var createdAtText: TextView = view.created_at_text
+    private var publicText: TextView = view.public_text
 
 
     fun render(posting: PostingDto) {
         titleText.text = posting.title
         contentText.text = modifyContent(posting.content)
         createdAtText.text = posting.createdAt  // TODO : String 수정해서 넣기
+        when (posting.isPublic) {
+            true -> {
+                publicText.visibility = VISIBLE
+            }
+            false -> {
+                publicText.visibility = INVISIBLE
+            }
+        }
     }
 
     private fun modifyContent(content: String): String {
