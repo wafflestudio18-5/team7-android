@@ -12,8 +12,9 @@ class UserService(
     // User sign up
     fun signUpUser(
         facebookid: String,
-        accessToken: String
-    ) = userRetrofitService.signUpUser(UserSignUpRequest(facebookid, accessToken))
+        accessToken: String,
+        nickname: String
+    ) = userRetrofitService.signUpUser(UserSignUpRequest(facebookid, accessToken, nickname))
 
     // User login
     fun loginUser(
