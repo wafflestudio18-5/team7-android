@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface TitleRetrofitService {
 
     // Title search
-    @GET("titles")
+    @GET("titles/")
     fun getTitles(
         @Query("time") time: String,
         @Query("order") order: String,
@@ -21,7 +21,7 @@ interface TitleRetrofitService {
         @Query("page_size") pageSize: String
     ): Single<TitleGetResponse>
 
-    @GET("titles/{title_id}/postings")
+    @GET("titles/{title_id}/postings/")
     fun getPostingsByTitleId(
         @Path("title_id") titleId: Long
     ): Single<TitlePostingGetByIdResponse>
