@@ -29,7 +29,7 @@ class WriteHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         write_button.setOnClickListener {
-            val intent = activity?.let { it1 -> WriteNewActivity.createIntent(it1) }
+            val intent = WriteNewActivity.createIntent(requireActivity())
             activity?.startActivity(intent)
         }
 
