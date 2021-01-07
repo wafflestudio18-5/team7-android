@@ -34,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Timber.d(AccessToken.getCurrentAccessToken()?.token)
+        Timber.d(AccessToken.getCurrentAccessToken()?.userId)
         if (isLoggedIn()) {
             Timber.d("User already logged in")
             // Show the Activity with the logged in user

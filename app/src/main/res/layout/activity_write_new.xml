@@ -2,27 +2,41 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout_write_new"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordinator_layout_write_new"
     android:background="@color/background"
     tools:context=".ui.main.MainActivity">
-
-    <include
-        layout="@layout/content_write_new"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            layout="@layout/content_write_new"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/keyboard_more_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_transition_container" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/dummy"
+            android:visibility="invisible"
+            android:id="@+id/dummy_background">
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_transition_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/close_text"
@@ -30,35 +44,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/close_text"
                 android:fontFamily="@font/nanum_myeongjo"
+                android:text="@string/close_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/title_text_write_new"
+                android:id="@+id/title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/nanum_myeongjo_bold"
                 android:text="글감"
-                android:textSize="21dp"
+                android:textSize="19dp"
+                android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/zoomed_title_text_write_new"
+
+            <EditText
+                android:id="@+id/edit_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/nanum_myeongjo_bold"
                 android:text="글감"
-                android:textSize="50dp"
-                android:visibility="invisible"
+                android:textSize="30dp"
+                android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/completed_text"
@@ -66,8 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="25dp"
-                android:text="@string/completed_text"
                 android:fontFamily="@font/nanum_myeongjo"
+                android:text="@string/completed_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,16 +105,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_snackbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/coordinator_layout_snackbar"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="50dp">
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_marginBottom="50dp" />
 
 
     <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_app_bar_write_new"
+        android:id="@+id/bottom_app_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
@@ -112,8 +128,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/copy_button"
@@ -125,8 +140,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/text_align_button"
@@ -138,8 +152,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/spell_check_button"
@@ -151,26 +164,24 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/number_of_characters_text"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
                 android:ems="10"
-                android:text="0 자"
-                android:textSize="12dp"
                 android:fontFamily="@font/nanum_myeongjo_bold"
                 android:gravity="center_vertical|center_horizontal"
-                android:background="@android:color/transparent"/>
+                android:text="0 자"
+                android:textSize="12dp" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/more_button"
@@ -182,8 +193,7 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" >
-            </Space>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
