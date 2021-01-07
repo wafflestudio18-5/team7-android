@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivityMyDetailPostingBinding
+import com.wafflestudio.written.models.PostingDto
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -24,28 +25,30 @@ class MyDetailPostingActivity : AppCompatActivity() {
         binding = ActivityMyDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intent = intent
-        viewModel.posting = intent.getParcelableExtra("posting")!!
+        viewModel.observePosting().subscribe {
+            modelView(it)
+        }
 
-        title_text.text = viewModel.posting.title
-        content_text.text = viewModel.posting.content
-        writer_text.text = viewModel.posting.writer.nickname
-        created_at_text.text = viewModel.posting.createdAt
+        val intent = intent
+        val posting: PostingDto = intent.getParcelableExtra("posting")?: run {
+            finish()
+            return
+        }
+        viewModel.setPosting(posting)
+
+        viewModel.getPostingDetail(posting.id)
+
 
         // TODO: Bottom bar OnClickListener
 
-        viewModel.getPostingDetail(viewModel.posting.id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewModel.posting = it
-                title_text.text = it.title
-                content_text.text = it.content
-                writer_text.text = it.writer.nickname
-                created_at_text.text = it.createdAt
-            }, {
-                Timber.d(it)
-            })
 
+
+    }
+
+    private fun modelView(posting: PostingDto) {
+        binding.titleText.text = posting.title
+        binding.contentText.text = posting.content
+        binding.writerText.text = posting.writer.nickname
+        binding.createdAtText.text = posting.createdAt
     }
 }
