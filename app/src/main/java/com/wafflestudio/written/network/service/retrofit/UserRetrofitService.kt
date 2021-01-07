@@ -45,13 +45,13 @@ interface UserRetrofitService {
         @Query("page_size") pageSize: String
     ): Single<UserGetPostingsByIdResponse>
 
-    @GET("/users/subscribed/")
+    @GET("users/subscribed/")
     fun getSubscribingUsers(
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
     ): Single<UserGetSubscribingResponse>
 
-    @GET("/users/subscriber/")
+    @GET("users/subscriber/")
     fun getSubscribedUsers(
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
