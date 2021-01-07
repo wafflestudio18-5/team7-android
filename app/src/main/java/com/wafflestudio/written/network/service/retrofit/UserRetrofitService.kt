@@ -38,11 +38,24 @@ interface UserRetrofitService {
     ): Single<UserDto>
 
     // User get {user_id} Posting
-    @GET("/users/{user_id}/postings/")
+    @GET("users/{user_id}/postings/")
     fun getPostingsByUserId(
         @Path("user_id") userId: String,
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
     ): Single<UserGetPostingsByIdResponse>
+
+    @GET("/users/subscribed/")
+    fun getSubscribingUsers(
+        @Query("cursor") cursor: String?,
+        @Query("page_size") pageSize: String
+    ): Single<UserGetSubscribingResponse>
+
+    @GET("/users/subscriber/")
+    fun getSubscribedUsers(
+        @Query("cursor") cursor: String?,
+        @Query("page_size") pageSize: String
+    ): Single<UserGetSubscribingResponse>
+
 
 }
