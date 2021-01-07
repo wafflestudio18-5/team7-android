@@ -48,9 +48,7 @@ class SavedFragment : Fragment() {
         savedViewModel.getSavedPostings()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-
-            }, {
+            .subscribe({}, {
                 Timber.d(it)
             })
             .also { compositeDisposable.add(it) }
