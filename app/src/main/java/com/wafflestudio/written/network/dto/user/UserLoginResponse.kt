@@ -5,6 +5,7 @@ import com.wafflestudio.written.models.UserDto
 
 data class UserLoginResponse(
     val user: UserDto,
-    @field:Json(name = "access_token")
-    val accessToken: String
+    val access_token: String
+//    @field:Json(name = "access_token")
+//    val accessToken: String
 )

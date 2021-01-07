@@ -15,6 +15,7 @@ import com.facebook.login.LoginResult
 import com.wafflestudio.written.databinding.ActivityLoginBinding
 import com.wafflestudio.written.models.ApiErrorResponse
 import com.wafflestudio.written.ui.main.MainActivity
+import com.wafflestudio.written.ui.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -28,15 +29,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var retrofit: Retrofit
-
     companion object {
         fun createIntent(context : Context): Intent {
             return Intent(context, LoginActivity::class.java)
         }
     }
 
+    @Inject
+    lateinit var retrofit: Retrofit
     private lateinit var binding: ActivityLoginBinding
     private lateinit var callbackManager: CallbackManager
     private val viewModel: LoginViewModel by viewModels()
@@ -48,6 +48,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Timber.d(AccessToken.getCurrentAccessToken()?.token)
+        Timber.d(AccessToken.getCurrentAccessToken()?.userId)
+
         if (isLoggedIn()) {
             Timber.d("User already logged in")
             // Show the Activity with the logged in user
@@ -86,6 +88,14 @@ class LoginActivity : AppCompatActivity() {
                                         null
                                     }?.let { errorResponse ->
                                         Timber.d("YAY! $errorResponse")
+                                        if (errorResponse.errorcode == 10001L) {
+                                            Toast.makeText(this@LoginActivity, "Facebook Login Error", Toast.LENGTH_SHORT).show()
+                                        } else if (errorResponse.errorcode == 10006L) {
+                                            Timber.d("YAY! ${errorResponse.errorcode}")
+                                            startActivity(SignUpActivity.createIntent(
+                                                this@LoginActivity, accessToken.userId, accessToken.token))
+                                            finish()
+                                        }
                                     } ?: run {
                                         Toast.makeText(this@LoginActivity, "2", Toast.LENGTH_SHORT).show()
                                     }
