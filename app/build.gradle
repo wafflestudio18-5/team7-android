@@ -24,7 +24,7 @@ android {
     buildTypes {
         // TODO : HAVE TO ADD BASE_URL
         debug {
-            buildConfigField "String", "WRITTEN_BASE_URL", '"https://~~"'
+            buildConfigField "String", "WRITTEN_BASE_URL", '"http://13.125.159.22"'
         }
         release {
             buildConfigField "String", "WRITTEN_BASE_URL", '"https://~~"'
@@ -65,6 +65,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation "androidx.activity:activity-ktx:1.2.0-beta01"
     implementation "androidx.fragment:fragment-ktx:1.2.5"
+    implementation 'androidx.preference:preference:1.1.1'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

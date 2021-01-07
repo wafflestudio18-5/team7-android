@@ -7,5 +7,5 @@ data class UserDto(
     val nickname: String,
     val description: String,
     @field:Json(name = "first_posted_at")
-    val firstPostedAt: String
+    val firstPostedAt: String?
 )
