@@ -14,9 +14,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import timber.log.Timber
 
 class WriterViewModel @ViewModelInject constructor(
-    private val postingService: PostingService,
-    private val userService: UserService,
-    private val userRepository: UserRepository
+    private val userService: UserService
 ): ViewModel() {
 
     private var cursor: String? = null
@@ -29,19 +27,22 @@ class WriterViewModel @ViewModelInject constructor(
 
     fun getWriter() = userService.getUserById(userId = writerId)
 
-    fun getWriterPostings(writerId: Int) {
+    fun getWriterPostings() {
         loadingPostings = true
         userService.getPostingByUserId(writerId, cursor)
-            .flatMap {
+            .subscribeOn(Schedulers.io())
+            .subscribe({
                 loadingPostings = false
                 postingsSubject.onNext(postingsSubject.value.plus(it.postings))
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
-                Single.just(it)
-            }
+            }, {
+                Timber.d(it)
+            })
+            .also { compositeDisposable.add(it) }
     }
 
-    fun getNextPostings(writerId: Int) {
+    fun getNextPostings() {
         if(!loadingPostings && hasNext) {
             loadingPostings = true
             userService.getPostingByUserId(writerId, cursor)

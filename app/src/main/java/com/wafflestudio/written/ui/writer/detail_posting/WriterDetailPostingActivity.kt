@@ -1,9 +1,12 @@
 package com.wafflestudio.written.ui.writer.detail_posting
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivityWriterDetailPostingBinding
+import com.wafflestudio.written.models.PostingDto
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -12,6 +15,12 @@ import kotlinx.android.synthetic.main.writer_bottom_app_bar_detail_posting.view.
 import timber.log.Timber
 
 class WriterDetailPostingActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context : Context): Intent {
+            return Intent(context, WriterDetailPostingActivity::class.java)
+        }
+    }
 
     private val viewModel: WriterDetailPostingViewModel by viewModels()
     private lateinit var binding: ActivityWriterDetailPostingBinding
@@ -23,31 +32,18 @@ class WriterDetailPostingActivity : AppCompatActivity() {
         binding = ActivityWriterDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.observePosting().subscribe {
+            modelView(it)
+        }
+
         val intent = intent
-        viewModel.posting = intent.getParcelableExtra("posting")?: run {
+        val posting: PostingDto = intent.getParcelableExtra("posting")?: run {
             finish()
             return
         }
+        viewModel.setPosting(posting)
 
-        binding.bottomAppBar.writerText.text = viewModel.posting.writer.nickname
-        binding.titleText.text = viewModel.posting.title
-        binding.contentText.text = viewModel.posting.content
-        binding.writerText.text = viewModel.posting.writer.nickname
-        binding.createdAtText.text = viewModel.posting.createdAt
-
-        viewModel.getPostingDetail(viewModel.posting.id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewModel.posting = it
-                binding.titleText.text = viewModel.posting.title
-                binding.contentText.text = viewModel.posting.content
-                binding.writerText.text = viewModel.posting.writer.nickname
-                binding.createdAtText.text = viewModel.posting.createdAt
-            }, {
-                Timber.d(it)
-            })
-            .also { compositeDisposable.add(it) }
+        viewModel.getPostingDetail(posting.id)
 
         bottom_app_bar.back_text.setOnClickListener {
             finish()
@@ -56,6 +52,14 @@ class WriterDetailPostingActivity : AppCompatActivity() {
         bottom_app_bar.writer_posting_text.setOnClickListener {
             finish()
         }
+    }
+
+    private fun modelView(posting: PostingDto) {
+        binding.bottomAppBar.writerText.text = posting.writer.nickname
+        binding.titleText.text = posting.title
+        binding.contentText.text = posting.content
+        binding.writerText.text = posting.writer.nickname
+        binding.createdAtText.text = posting.createdAt
     }
 
     override fun onDestroy() {

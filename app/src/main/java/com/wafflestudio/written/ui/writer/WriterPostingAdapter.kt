@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.R
 import com.wafflestudio.written.models.PostingDto
+import com.wafflestudio.written.ui.writer.detail_posting.WriterDetailPostingActivity
 import kotlinx.android.synthetic.main.item_posting.view.*
 
 class WriterPostingAdapter(private val context: Context) : RecyclerView.Adapter<WriterPostingViewHolder>() {
@@ -27,6 +28,12 @@ class WriterPostingAdapter(private val context: Context) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: WriterPostingViewHolder, position: Int) {
         val posting = postings[position]
         holder.render(posting)
+
+        holder.itemView.setOnClickListener {
+            val intent = WriterDetailPostingActivity.createIntent(context)
+            intent.putExtra("posting", posting)
+            context.startActivity(intent)
+        }
     }
 }
 
@@ -36,12 +43,7 @@ class WriterPostingViewHolder(view: View, context: Context) : RecyclerView.ViewH
     private var createdAtText: TextView = view.created_at_text
     private var writerText: TextView = view.writer_text
 
-    private var postingData: PostingDto? = null
-
-    // TODO : onClickListener
-
     fun render(posting: PostingDto) {
-        postingData = posting
         titleText.text = posting.title
         contentText.text = posting.content
         createdAtText.text = posting.createdAt // TODO
