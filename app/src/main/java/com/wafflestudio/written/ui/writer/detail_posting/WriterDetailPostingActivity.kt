@@ -48,7 +48,7 @@ class WriterDetailPostingActivity : AppCompatActivity() {
         bottom_app_bar.back_text.setOnClickListener {
             finish()
         }
-        
+
         bottom_app_bar.writer_posting_text.setOnClickListener {
             finish()
         }
