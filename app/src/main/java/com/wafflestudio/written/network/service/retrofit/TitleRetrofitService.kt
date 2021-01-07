@@ -23,7 +23,8 @@ interface TitleRetrofitService {
 
     @GET("titles/{title_id}/postings/")
     fun getPostingsByTitleId(
-        @Path("title_id") titleId: Long
+        @Path("title_id") titleId: Long,
+        @Query("cursor") cursor: String?
     ): Single<TitlePostingGetByIdResponse>
 
 }

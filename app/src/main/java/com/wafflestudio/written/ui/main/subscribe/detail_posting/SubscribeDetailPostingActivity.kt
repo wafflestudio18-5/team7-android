@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivitySubscribeDetailPostingBinding
@@ -79,6 +80,11 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
         binding.bottomAppBar.writerText.text = posting.writer.nickname
         binding.titleText.text = posting.title
         binding.contentText.text = posting.content
+        binding.contentText.gravity = when(posting.alignment) {
+            "LEFT" -> Gravity.LEFT
+            "CENTER" -> Gravity.CENTER
+            else -> Gravity.CENTER
+        }
         binding.writerText.text = posting.writer.nickname
         binding.createdAtText.text = posting.createdAt
     }
