@@ -5,7 +5,7 @@ import com.wafflestudio.written.models.UserDto
 
 data class UserGetSubscribingResponse (
     val writers: List<UserDto>,
-    @field:Json(name = "has_next")
+    @Json(name = "has_next")
     val hasNext: Boolean,
     val cursor: String?
 )
