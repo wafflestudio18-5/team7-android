@@ -23,10 +23,10 @@ import javax.inject.Inject
 class SignUpActivity: AppCompatActivity() {
 
     companion object {
-        fun createIntent(context: Context, facebookid: String, access_token: String): Intent {
+        fun createIntent(context: Context, facebookid: String, accessToken: String): Intent {
             return Intent(context, SignUpActivity::class.java).apply {
                 putExtra("facebookid", facebookid)
-                putExtra("access_token", access_token)
+                putExtra("accessToken", accessToken)
             }
         }
     }
@@ -44,15 +44,15 @@ class SignUpActivity: AppCompatActivity() {
 
         binding.signUpButton.setOnClickListener {
             lateinit var facebookid: String
-            lateinit var access_token: String
+            lateinit var accessToken: String
             intent.getStringExtra("facebookid")?.let {
                 facebookid = it
             }
-            intent.getStringExtra("access_token")?.let {
-                access_token = it
+            intent.getStringExtra("accessToken")?.let {
+                accessToken = it
             }
             val nickname = binding.nicknameEditText.text.toString()
-            viewModel.signup(facebookid, access_token, nickname)
+            viewModel.signup(facebookid, accessToken, nickname)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe ({
