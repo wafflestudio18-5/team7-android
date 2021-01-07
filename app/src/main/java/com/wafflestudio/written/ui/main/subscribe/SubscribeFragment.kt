@@ -69,4 +69,9 @@ class SubscribeFragment : Fragment() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+
 }

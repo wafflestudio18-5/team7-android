@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivityWriterDetailPostingBinding
 import com.wafflestudio.written.models.PostingDto
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_writer_detail_posting.*
 import kotlinx.android.synthetic.main.writer_bottom_app_bar_detail_posting.view.*
 import timber.log.Timber
 
+@AndroidEntryPoint
 class WriterDetailPostingActivity : AppCompatActivity() {
 
     companion object {

@@ -68,4 +68,9 @@ class SavedFragment : Fragment() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+
 }
