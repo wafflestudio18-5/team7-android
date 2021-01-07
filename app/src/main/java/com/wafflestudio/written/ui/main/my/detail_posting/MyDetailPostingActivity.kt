@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.wafflestudio.written.R
@@ -85,6 +86,11 @@ class MyDetailPostingActivity : AppCompatActivity() {
             }
         }
 
+        binding.contentText.gravity = when(posting.alignment) {
+            "LEFT" -> Gravity.LEFT
+            "CENTER" -> Gravity.CENTER
+            else -> Gravity.CENTER
+        }
 
         binding.titleText.text = posting.title
         binding.contentText.text = posting.content

@@ -40,7 +40,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/nanum_myeongjo"
             tools:text="이건 글이다\n왜인지는 나도 잘 모른다\n\n단지 씀을 클론 코딩하기 위해\nUI를 짜고 있던 도중\n\n글이 적혀있는 공간이\n너무 허전해서\n하나 써보고 있는 것 뿐\n\n와플 화이팅~"
-            android:textAlignment="center"/>
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/writer_text"

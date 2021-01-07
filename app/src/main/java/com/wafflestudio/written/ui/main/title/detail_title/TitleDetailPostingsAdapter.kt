@@ -1,33 +1,38 @@
-package com.wafflestudio.written.ui.main.subscribe
+package com.wafflestudio.written.ui.main.title.detail_title
 
 import android.content.Context
-import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.TextView.TEXT_ALIGNMENT_CENTER
+import android.widget.TextView.TEXT_ALIGNMENT_TEXT_START
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.R
 import com.wafflestudio.written.models.PostingDto
+import com.wafflestudio.written.ui.main.subscribe.SubscribePostingViewHolder
 import com.wafflestudio.written.ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity
 import kotlinx.android.synthetic.main.item_posting.view.*
 
-class SubscribePostingAdapter(private val context: Context) : RecyclerView.Adapter<SubscribePostingViewHolder>() {
+class TitleDetailPostingsAdapter(private val context: Context) : RecyclerView.Adapter<TitleDetailPostingsViewHolder>() {
 
     var postings: List<PostingDto> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubscribePostingViewHolder =
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): TitleDetailPostingsViewHolder =
         LayoutInflater.from(parent.context)
             .inflate(R.layout.item_posting, parent, false)
-            .let { SubscribePostingViewHolder(it) }
+            .let { TitleDetailPostingsViewHolder(it) }
 
 
     override fun getItemCount(): Int {
         return postings.size
     }
 
-    override fun onBindViewHolder(holder: SubscribePostingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TitleDetailPostingsViewHolder, position: Int) {
         val posting = postings[position]
         holder.render(posting)
 
@@ -37,12 +42,12 @@ class SubscribePostingAdapter(private val context: Context) : RecyclerView.Adapt
             context.startActivity(intent)
         }
     }
-
 }
 
 
 
-class SubscribePostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+class TitleDetailPostingsViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private var titleText: TextView = view.title_text
     private var contentText: TextView = view.content_text
     private var createdAtText: TextView = view.created_at_text
@@ -59,6 +64,4 @@ class SubscribePostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         createdAtText.text = posting.createdAt // TODO
         writerText.text = posting.writer.nickname
     }
-
-
 }

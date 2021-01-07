@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanum_myeongjo"
-        android:text="< 뒤로"
+        android:text="뒤로"
         android:textSize="14sp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
