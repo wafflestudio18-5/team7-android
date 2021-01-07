@@ -97,10 +97,10 @@ class LoginActivity : AppCompatActivity() {
                                             finish()
                                         }
                                     } ?: run {
-                                        Toast.makeText(this@LoginActivity, "2", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this@LoginActivity, "Null response", Toast.LENGTH_SHORT).show()
                                     }
                                 } else {
-                                    Toast.makeText(this@LoginActivity, "1", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@LoginActivity, "Failed to parse", Toast.LENGTH_SHORT).show()
                                 }
                             })
                     }

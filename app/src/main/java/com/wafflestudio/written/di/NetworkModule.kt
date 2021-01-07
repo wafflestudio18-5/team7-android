@@ -1,6 +1,6 @@
 package com.wafflestudio.written.di
 
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.squareup.moshi.Moshi
 import com.wafflestudio.written.App
 import com.wafflestudio.written.BuildConfig

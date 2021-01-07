@@ -3,7 +3,6 @@ package com.wafflestudio.written.ui.signup
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -81,10 +80,10 @@ class SignUpActivity: AppCompatActivity() {
                                 goToMainActivity()
                             }
                         } ?: run {
-                            Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Null response", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Failed to parse", Toast.LENGTH_SHORT).show()
                     }
                 })
         }
