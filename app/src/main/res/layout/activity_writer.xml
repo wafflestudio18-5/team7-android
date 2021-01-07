@@ -8,6 +8,30 @@
     android:background="#F7F7F7">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanum_myeongjo"
+        android:text="< 뒤로"
+        android:textSize="14sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/subscribe_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanum_myeongjo"
+        android:text="구독"
+        android:textSize="14sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
         android:id="@+id/nickname_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,23 +68,24 @@
         >
 
         <TextView
+            android:id="@+id/public_many_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanum_myeongjo"
-            android:text="나의 글"
-            android:textSize="16sp"
+            android:text="총 00편 공개"
+            android:textSize="10sp"
             android:layout_gravity="start"
             android:layout_marginLeft="16dp"/>
 
         <TextView
-            android:id="@+id/written_opened_text"
+            android:id="@+id/first_posting_text"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:textAlignment="textEnd"
             android:fontFamily="@font/nanum_myeongjo"
-            tools:text="0편 씀 / 0편 공개"
+            tools:text="0000년 00월 00일 00시, 첫 글."
             android:layout_marginEnd="16dp"/>
 
     </LinearLayout>

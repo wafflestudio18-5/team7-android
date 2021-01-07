@@ -43,5 +43,15 @@ class UserService(
         pageSize.toString()
     )
 
+    fun getSubscribingUsers(
+        cursor: String?,
+        pageSize: Int = 20
+    ) = userRetrofitService.getSubscribingUsers(cursor, pageSize.toString())
+
+    fun getSubscribedUsers(
+        cursor: String?,
+        pageSize: Int = 20
+    ) = userRetrofitService.getSubscribedUsers(cursor, pageSize.toString())
+
 
 }
