@@ -44,7 +44,7 @@ class MyFragment : Fragment() {
         my_postings_recyclerview.adapter = myPostingAdapter
 
         myViewModel.observePostings().subscribe {
-            myPostingAdapter.postings = myPostingAdapter.postings.plus(it)
+            myPostingAdapter.postings = it
         }
 
         // get initial values
@@ -52,7 +52,7 @@ class MyFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { user ->
-                myViewModel.getMyPostings(cursor = null)
+                myViewModel.getMyPostings()
                     .map { user }
             }
             .subscribe({ user ->
@@ -61,6 +61,7 @@ class MyFragment : Fragment() {
             }, {
                 Timber.d(it)
             })
+            .also { compositeDisposable.add(it) }
 
         my_postings_recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

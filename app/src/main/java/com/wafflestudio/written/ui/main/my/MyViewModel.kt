@@ -39,17 +39,16 @@ class MyViewModel @ViewModelInject constructor(
                     cursor = if (it.hasNext) it.cursor else null
                     loadingPostings = false
                 }, {
+                    loadingPostings = false
                     Timber.d(it)
                 })
                 .also { compositeDisposable.add(it) }
         }
     }
 
-    fun getMyPostings(
-        cursor: String?
-    ): Single<UserGetPostingsByIdResponse> {
+    fun getMyPostings(): Single<UserGetPostingsByIdResponse> {
         return getUser().flatMap {
-            userService.getPostingByUserId(userId = it.id, cursor = cursor)
+            userService.getPostingByUserId(userId = it.id, cursor = null)
         }
     }
 
