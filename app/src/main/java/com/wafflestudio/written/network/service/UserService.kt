@@ -54,5 +54,8 @@ class UserService(
         pageSize: Int = 20
     ) = userRetrofitService.getSubscribedUsers(cursor, pageSize.toString())
 
+    fun subscribeUserById(userId: Int) = userRetrofitService.subscribeUserById(userId.toString())
+
+    fun unsubscribeUserById(userId: Int) = userRetrofitService.unsubscribeUserById(userId.toString())
 
 }

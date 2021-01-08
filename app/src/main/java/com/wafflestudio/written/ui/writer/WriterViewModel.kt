@@ -1,5 +1,6 @@
 package com.wafflestudio.written.ui.writer
 
+import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.wafflestudio.written.models.PostingDto
@@ -22,13 +23,15 @@ class WriterViewModel @ViewModelInject constructor(
     private var hasNext: Boolean = false
     private var loadingPostings: Boolean = false
     var writerId: Int = -1
+    var isSubscribingSubject = BehaviorSubject.createDefault(false)
 
     private var postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
     private val compositeDisposable = CompositeDisposable()
 
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
+    fun observeSubscribing(): Observable<Boolean> = isSubscribingSubject.hide()
 
-    fun getWriter() = userService.getUserById(userId = writerId)
+    fun getWriter() = userService.getUserById(userId = writerId).doOnSuccess { isSubscribingSubject.onNext(it.subscribing?:false) }
 
     fun getWriterPostings() {
         loadingPostings = true
@@ -63,5 +66,31 @@ class WriterViewModel @ViewModelInject constructor(
         }
     }
 
+    fun changeSubscribing() {
+        if(isSubscribingSubject.value) {
+            userService.unsubscribeUserById(writerId)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    isSubscribingSubject.onNext(false)
+                }, {
+                    Timber.d(it)
+                })
+                .also { compositeDisposable.add(it) }
+        }
+        else {
+            userService.subscribeUserById(writerId)
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    isSubscribingSubject.onNext(true)
+                }, {
+                    Timber.d(it)
+                })
+                .also { compositeDisposable.add(it) }
+        }
+    }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
+    }
 }

@@ -11,5 +11,6 @@ data class UserDto(
     @Json(name = "count_public_postings")
     val countPublicPostings: Int?,
     @Json(name = "count_all_postings")
-    val countAllPostings: Int?
+    val countAllPostings: Int?,
+    val subscribing: Boolean?
 )
