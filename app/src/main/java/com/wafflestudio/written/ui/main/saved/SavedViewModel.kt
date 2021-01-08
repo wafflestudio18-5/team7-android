@@ -31,7 +31,7 @@ class SavedViewModel @ViewModelInject constructor(
             postingService.getScrappedPostings(cursor)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    postingsSubject.onNext(postingsSubject.value.plus(it.storedPostings))
+                    postingsSubject.onNext(postingsSubject.value.plus(it.storedPostings?: emptyList()))
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     loadingPostings = false
@@ -49,7 +49,7 @@ class SavedViewModel @ViewModelInject constructor(
             .flatMap {
                 hasNext = it.hasNext
                 loadingPostings = false
-                postingsSubject.onNext(postingsSubject.value.plus(it.storedPostings))
+                postingsSubject.onNext(postingsSubject.value.plus(it.storedPostings?: emptyList()))
                 cursor = if (it.hasNext) it.cursor else null
                 Single.just(it)
             }

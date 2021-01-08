@@ -32,32 +32,32 @@ interface PostingRetrofitService {
     ): Single<PostingDto>
 
     // Posting delete
-    @DELETE("postings/{posting_id}")
+    @DELETE("postings/{posting_id}/")
     fun deletePosting(
         @Path("posting_id") postingId: Long
     ): Completable
 
     // Posting scrap
-    @POST("postings/{posting_id}/scrap")
+    @POST("postings/{posting_id}/scrap/")
     fun scrapPosting(
         @Path("posting_id") postingId: Long
     ): Completable
 
     // Posting unscrap
-    @POST("postings/{posting_id}/unscrap")
+    @POST("postings/{posting_id}/unscrap/")
     fun unscrapPosting(
         @Path("posting_id") postingId: Long
     ): Completable
 
     // Posting get scrapped
-    @GET("postings/scrapped")
+    @GET("postings/scrapped/")
     fun getScrappedPostings(
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
     ): Single<PostingScrappedResponse>
 
     // Posting get subscribed
-    @GET("postings/subscribed")
+    @GET("postings/subscribed/")
     fun getSubscribedPostings(
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String

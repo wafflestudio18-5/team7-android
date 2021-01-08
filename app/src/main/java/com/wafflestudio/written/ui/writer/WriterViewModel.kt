@@ -33,7 +33,7 @@ class WriterViewModel @ViewModelInject constructor(
             .subscribeOn(Schedulers.io())
             .subscribe({
                 loadingPostings = false
-                postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
             }, {
@@ -49,7 +49,7 @@ class WriterViewModel @ViewModelInject constructor(
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     loadingPostings = false
-                    postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                    postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                 }, {

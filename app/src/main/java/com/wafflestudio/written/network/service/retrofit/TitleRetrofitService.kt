@@ -13,10 +13,10 @@ interface TitleRetrofitService {
     // Title search
     @GET("titles/")
     fun getTitles(
-        @Query("time") time: String,
-        @Query("order") order: String,
-        @Query("official") official: String,
-        @Query("query") query: String,
+        @Query("time") time: String?,
+        @Query("order") order: String?,
+        @Query("official") official: String?,
+        @Query("query") query: String?,
         @Query("cursor") cursor: String?,
         @Query("page_size") pageSize: String
     ): Single<TitleGetResponse>

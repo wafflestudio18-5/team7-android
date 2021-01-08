@@ -9,12 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.FragmentSavedBinding
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_saved.*
 import timber.log.Timber
 
+@AndroidEntryPoint
 class SavedFragment : Fragment() {
 
     private lateinit var binding: FragmentSavedBinding
@@ -66,6 +68,11 @@ class SavedFragment : Fragment() {
             }
         })
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 
 }

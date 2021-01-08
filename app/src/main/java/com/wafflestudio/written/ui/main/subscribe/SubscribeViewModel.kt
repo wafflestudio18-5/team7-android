@@ -28,7 +28,7 @@ class SubscribeViewModel @ViewModelInject constructor(private val postingService
             postingService.getSubscribedPostings(cursor)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                    postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     loadingPostings = false
@@ -45,7 +45,7 @@ class SubscribeViewModel @ViewModelInject constructor(private val postingService
         return postingService.getSubscribedPostings(null)
             .flatMap {
                 loadingPostings = false
-                postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
                 Single.just(it)

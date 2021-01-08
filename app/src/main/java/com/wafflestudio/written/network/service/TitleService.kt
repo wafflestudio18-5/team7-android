@@ -7,10 +7,10 @@ class TitleService(
 ) {
 
     fun getTitles(
-        time: String,
-        order: String,
-        official: String,
-        query: String,
+        time: String?,
+        order: String?,
+        official: String?,
+        query: String?,
         cursor: String?,
         pageSize: Int = 10
     ) = titleRetrofitService.getTitles(time, order, official, query, cursor, pageSize.toString())

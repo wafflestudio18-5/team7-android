@@ -54,7 +54,3 @@ class TitlePostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         return countPublic.toString() + "씀 / " + countAll.toString() + "공개"
     }
 }
-
-
-
-

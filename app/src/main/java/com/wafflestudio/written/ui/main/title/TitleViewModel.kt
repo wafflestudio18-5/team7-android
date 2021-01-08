@@ -25,10 +25,10 @@ class TitleViewModel @ViewModelInject constructor(private val titleService: Titl
     fun getNextTitles() {
         if(!loadingTitles && hasNext) {
             loadingTitles = true
-            titleService.getTitles(time = "", order = "", official = "", query = "", cursor = cursor)
+            titleService.getTitles(time = null, order = null, official = null, query = null, cursor = cursor)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    titlesSubject.onNext(titlesSubject.value.plus(it.titles))
+                    titlesSubject.onNext(titlesSubject.value.plus(it.titles?: emptyList()))
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     loadingTitles = false
@@ -42,10 +42,10 @@ class TitleViewModel @ViewModelInject constructor(private val titleService: Titl
 
     fun getTitles() {
         loadingTitles = true
-        titleService.getTitles(time = "", order = "", official = "", query = "", cursor = cursor)
+        titleService.getTitles(time = null, order = null, official = null, query = null, cursor = cursor)
             .subscribeOn(Schedulers.io())
             .subscribe({
-                titlesSubject.onNext(titlesSubject.value.plus(it.titles))
+                titlesSubject.onNext(titlesSubject.value.plus(it.titles?: emptyList()))
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
                 loadingTitles = false

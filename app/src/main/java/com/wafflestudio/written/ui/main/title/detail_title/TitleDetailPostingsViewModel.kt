@@ -58,4 +58,3 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
             .also { compositeDisposable.add(it) }
     }
 }
-
