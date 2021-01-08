@@ -18,7 +18,7 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
     private var hasNext: Boolean = false
     private var loadingPostings: Boolean = false
     private val postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
-
+    var title: String = ""
     var titleId: Int = -1
 
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
@@ -48,6 +48,7 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
             .subscribeOn(Schedulers.io())
             .subscribe({
                 postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
+                title = it.title
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
                 loadingPostings = false
