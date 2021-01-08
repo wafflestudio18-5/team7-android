@@ -43,7 +43,10 @@ class SubscribeFragment : Fragment() {
         binding.subscribeRecyclerview.layoutManager = subscribeLayoutManager
         binding.subscribeRecyclerview.adapter = subscribePostingAdapter
 
-        subscribeViewModel.observePostings().subscribe {
+        subscribeViewModel.observePostings()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
             subscribePostingAdapter.postings = it
             subscribePostingAdapter.notifyDataSetChanged()
         }
