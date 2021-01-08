@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.ActivityTitleDetailPostingsBinding
+import com.wafflestudio.written.ui.main.write.WriteNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
@@ -40,14 +41,23 @@ class TitleDetailPostingsActivity : AppCompatActivity() {
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-            titleDetailPostingsAdapter.postings = it
-            titleDetailPostingsAdapter.notifyDataSetChanged()
+                binding.appBar.titleText.text = viewModel.title
+                titleDetailPostingsAdapter.postings = it
+                titleDetailPostingsAdapter.notifyDataSetChanged()
         }
 
         val intent = intent
         viewModel.titleId = intent.getIntExtra("titleId", -1)
 
         viewModel.getPostings()
+
+        binding.appBar.backText.setOnClickListener {
+            finish()
+        }
+
+        binding.appBar.writeText.setOnClickListener {
+            startActivity(WriteNewActivity.createIntent(this, viewModel.title))
+        }
 
         binding.titlePostingsRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
