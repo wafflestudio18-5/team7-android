@@ -24,6 +24,7 @@ class DeleteDialogFragment: DialogFragment() {
             viewModel = ViewModelProvider(requireActivity()).get(MyDetailPostingViewModel::class.java)
             val builder = AlertDialog.Builder(it)
             builder.setView(binding.root)
+
             binding.deleteButton.setOnClickListener {
                 viewModel.confirmDelete()
                 viewModel.observeConfirmDelete()
@@ -32,10 +33,12 @@ class DeleteDialogFragment: DialogFragment() {
                     }
                 dismiss()
             }
+
             binding.cancelButton.setOnClickListener {
                 viewModel.cancelDelete()
                 dismiss()
             }
+
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

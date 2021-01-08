@@ -54,9 +54,7 @@ class MyDetailPostingViewModel @ViewModelInject constructor(private val postingS
 
     fun deletePosting() = postingService.deletePosting(postingSubject.value.id.toLong())
 
-    fun confirmDelete() {
-        confirmDeleteSubject.onNext(true)
-    }
+    fun confirmDelete() = confirmDeleteSubject.onNext(true)
     fun cancelDelete() = confirmDeleteSubject.onNext(false)
 
     override fun onCleared() {

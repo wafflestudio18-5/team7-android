@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -11,7 +12,9 @@ import com.wafflestudio.written.databinding.ActivitySettingsBinding
 import com.wafflestudio.written.ui.login.LoginActivity
 import com.wafflestudio.written.ui.settings.edit.EditUserActivity
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -49,13 +52,28 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.logoutLayout.setOnClickListener {
-            PreferenceManager.getDefaultSharedPreferences(this).edit {
-                remove("AUTH_TOKEN")
-            }
-            val intent = LoginActivity.createIntent(this)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-            startActivity(intent)
+            showLogoutDialog()
+            viewModel.observeConfirmLogout()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it) {
+                        PreferenceManager.getDefaultSharedPreferences(this).edit {
+                            remove("AUTH_TOKEN")
+                        }
+                        val intent = LoginActivity.createIntent(this)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                        startActivity(intent)
+                    }
+                }, {
+                    Toast.makeText(this, "로그아웃에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                })
         }
 
+    }
+
+    fun showLogoutDialog() {
+        val dialog = LogoutDialogFragment()
+        dialog.show(supportFragmentManager, "LogoutDialogFragment")
     }
 }

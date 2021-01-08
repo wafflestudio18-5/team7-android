@@ -19,4 +19,7 @@
     <string name="delete_dialog_delete">삭제하기</string>
     <string name="delete_dialog_cancel">취소</string>
     <string name="all_titles_text">전체 기간 중 최근에 등록된 모든 글감</string>
+    <string name="logout_dialog_title">정말로 로그아웃 하시겠습니까?</string>
+    <string name="logout_dialog_cancel">취소</string>
+    <string name="logout_dialog_logout">로그아웃</string>
 </resources>
