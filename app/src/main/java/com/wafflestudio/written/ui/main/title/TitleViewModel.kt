@@ -2,6 +2,7 @@ package com.wafflestudio.written.ui.main.title
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.models.TitleDto
 import com.wafflestudio.written.network.service.TitleService
 import io.reactivex.rxjava3.core.Observable
@@ -18,7 +19,7 @@ class TitleViewModel @ViewModelInject constructor(private val titleService: Titl
     private var cursor: String? = null
     private var hasNext: Boolean = false
     private var loadingTitles: Boolean = false
-    private val titlesSubject = BehaviorSubject.create<List<TitleDto>>()
+    private val titlesSubject = BehaviorSubject.createDefault<List<TitleDto>>(emptyList())
 
     fun observeTitles(): Observable<List<TitleDto>> = titlesSubject.hide()
 
