@@ -15,10 +15,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.wafflestudio.written.databinding.FragmentWriteBinding
 import com.wafflestudio.written.databinding.FragmentWriteHomeBinding
 import com.wafflestudio.written.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_write.*
 import kotlinx.android.synthetic.main.fragment_write_home.*
 
+@AndroidEntryPoint
 class WriteFragment : Fragment() {
 
     companion object {
