@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.ChangeBounds
@@ -16,13 +17,20 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.HandlerCompat.postDelayed
+import bolts.Task.delay
 import com.google.android.material.snackbar.Snackbar
 import com.wafflestudio.written.R
 import com.wafflestudio.written.databinding.ActivityWriteNewBinding
 import kotlinx.android.synthetic.main.activity_write_new.*
 import kotlinx.android.synthetic.main.content_write_new.*
+import timber.log.Timber
+import java.util.*
+import kotlin.concurrent.schedule
+import kotlin.math.exp
 
 
 class WriteNewActivity : AppCompatActivity() {
@@ -34,6 +42,7 @@ class WriteNewActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityWriteNewBinding
+    private val viewModel: WriteNewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +50,17 @@ class WriteNewActivity : AppCompatActivity() {
         binding = ActivityWriteNewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var appBarVisible = false
         binding.keyboardMoreButton.setOnClickListener {
             binding.bottomAppBar.visibility = View.VISIBLE
+            binding.keyboardMoreButton.visibility = View.GONE
+            appBarVisible = true
         }
 
         binding.moreButton.setOnClickListener {
             binding.bottomAppBar.visibility = View.INVISIBLE
+            binding.keyboardMoreButton.visibility = View.VISIBLE
+            appBarVisible = false
         }
 
         binding.copyButton.setOnClickListener {
@@ -73,38 +87,51 @@ class WriteNewActivity : AppCompatActivity() {
             }
         }
 
-        content_edit_text.addTextChangedListener(object: TextWatcher{
+        content_edit_text.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val length = content_edit_text.length()
                 val text = "$length 자"
-                binding.numberOfCharactersText.setText(text)
+                binding.numberOfCharactersText.text = text
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         })
 
-        close_text.setOnClickListener {
+        binding.closeText.setOnClickListener {
             TODO()
         }
 
-        var visible = true
+        binding.completedText.setOnClickListener {
+
+        }
+
+        viewModel.observeExpand().subscribe { expand ->
+            Timber.d("expand: $expand")
+            binding.closeText.visibility = if (!expand) View.VISIBLE else View.GONE
+            binding.completedText.visibility = if (!expand) View.VISIBLE else View.GONE
+            binding.titleText.visibility = if (!expand) View.VISIBLE else View.GONE
+            binding.editTitleText.visibility = if (expand) View.VISIBLE else View.GONE
+            binding.dummyBackground.visibility = if (expand) View.VISIBLE else View.GONE
+            content_edit_text.isEnabled = !expand
+            binding.keyboardMoreButton.visibility =
+                if (!expand && !appBarVisible) View.VISIBLE else View.GONE
+            binding.bottomAppBar.visibility =
+                if (!expand && appBarVisible) View.VISIBLE else View.GONE
+        }
+
         binding.titleText.setOnClickListener {
-            visible = true
-            TransitionManager.beginDelayedTransition(top_transition_container)
-            binding.closeText.visibility = if (visible) View.VISIBLE else View.GONE
-            binding.completedText.visibility = if (visible) View.VISIBLE else View.GONE
-            binding.titleText.visibility = if (visible) View.VISIBLE else View.GONE
-            binding.editTitleText.visibility = if (!visible) View.VISIBLE else View.GONE
-            binding.dummyBackground.visibility = if(!visible) View.VISIBLE else View.GONE
-            content_edit_text.isEnabled = visible
+//            val transition = ChangeBounds()
+//            transition.duration = 1000L
+//            TransitionManager.beginDelayedTransition(top_transition_container, transition)
+            viewModel.expand()
         }
 
         binding.dummyBackground.setOnClickListener {
-            visible = false
+            viewModel.close()
         }
 
     }

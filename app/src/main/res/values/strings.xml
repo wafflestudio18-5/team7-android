@@ -11,5 +11,8 @@
     <string name="copy_snackbar_text">글이 클립보드에 복사되었습니다.</string>
     <string name="close_text">닫기</string>
     <string name="completed_text">완료</string>
+    <string name="close_dialog_title">작성 중인 글이 소멸됩니다.</string>
+    <string name="close_dialog_continue">계속 쓰기</string>
+    <string name="close_dialog_leave">나가기</string>
 
 </resources>
