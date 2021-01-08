@@ -41,6 +41,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/saved_postings_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/divide_line"

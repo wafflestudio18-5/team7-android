@@ -14,5 +14,5 @@
     <string name="close_dialog_title">작성 중인 글이 소멸됩니다.</string>
     <string name="close_dialog_continue">계속 쓰기</string>
     <string name="close_dialog_leave">나가기</string>
-
+    <string name="incomplete_snackbar_text">내용을 입력해주세요.</string>
 </resources>

@@ -6,16 +6,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
+import android.transition.ChangeBounds
+import android.transition.TransitionManager
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.wafflestudio.written.R
 import com.wafflestudio.written.databinding.ActivityWriteNewBinding
+import com.wafflestudio.written.ui.main.my.detail_posting.MyDetailPostingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_write_new.*
 import kotlinx.android.synthetic.main.content_write_new.*
 import timber.log.Timber
@@ -24,8 +32,13 @@ import timber.log.Timber
 class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogListener {
 
     companion object {
-        fun createIntent(context: Context): Intent {
-            return Intent(context, WriteNewActivity::class.java)
+        private const val TITLE_KEY = "title"
+
+        fun createIntent(context: Context, title: String): Intent {
+            Timber.d("title $title")
+            return Intent(context, WriteNewActivity::class.java).apply {
+                putExtra(TITLE_KEY, title)
+            }
         }
     }
 
@@ -37,6 +50,12 @@ class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogLis
 
         binding = ActivityWriteNewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        intent.getStringExtra(TITLE_KEY)?.let {
+            Timber.d("intent title $it")
+            binding.titleText.text = it
+            binding.editTitleText.setText(it)
+        }
 
         var appBarVisible = false
         binding.keyboardMoreButton.setOnClickListener {
@@ -98,8 +117,29 @@ class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogLis
         }
 
         binding.completedText.setOnClickListener {
-            startActivity(WriteCompletedActivity.createIntent(this))
-            finish()
+            if (TextUtils.isEmpty(content_edit_text.text.toString())) {
+                Snackbar.make(
+                    binding.coordinatorLayoutSnackbar,
+                    R.string.incomplete_snackbar_text,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            } else {
+                val title = binding.titleText.text.toString()
+                val content = content_edit_text.text.toString()
+                val alignment = if (centerAlignment) "CENTER" else "LEFT"
+                viewModel.writePosting(title, content, alignment)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        val intent = MyDetailPostingActivity.createIntent(this)
+                        intent.putExtra("posting", it)
+                        startActivity(MyDetailPostingActivity.createIntent(this))
+                        finish()
+                    }, {
+                        Timber.d(it)
+                        Toast.makeText(this, "Failed to make post", Toast.LENGTH_SHORT).show()
+                    })
+            }
         }
 
         viewModel.observeExpand().subscribe { expand ->
@@ -108,6 +148,7 @@ class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogLis
             binding.completedText.visibility = if (!expand) View.VISIBLE else View.GONE
             binding.titleText.visibility = if (!expand) View.VISIBLE else View.GONE
             binding.editTitleText.visibility = if (expand) View.VISIBLE else View.GONE
+            binding.titleText.text = binding.editTitleText.text.toString()
             binding.dummyBackground.visibility = if (expand) View.VISIBLE else View.GONE
             content_edit_text.isEnabled = !expand
             binding.keyboardMoreButton.visibility =
@@ -117,13 +158,22 @@ class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogLis
         }
 
         binding.titleText.setOnClickListener {
-//            val transition = ChangeBounds()
-//            transition.duration = 1000L
-//            TransitionManager.beginDelayedTransition(top_transition_container, transition)
+            val transition = ChangeBounds()
+            transition.duration = 1000L
+            TransitionManager.beginDelayedTransition(top_transition_container, transition)
             viewModel.expand()
         }
 
         binding.dummyBackground.setOnClickListener {
+            viewModel.createTitle(binding.editTitleText.text.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ( {
+                    Toast.makeText(this, "!!!", Toast.LENGTH_SHORT).show()
+                }, {
+                    Timber.d(it)
+                    Toast.makeText(this, "Failed to create title", Toast.LENGTH_SHORT).show()
+                })
             viewModel.close()
         }
 

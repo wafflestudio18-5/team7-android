@@ -1,11 +1,12 @@
 package com.wafflestudio.written.ui.splash
 
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import com.wafflestudio.written.ui.login.LoginActivity
 import com.wafflestudio.written.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
@@ -13,8 +14,9 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        startActivity(LoginActivity.createIntent(this))
-//        finish()
+        Timber.d(PreferenceManager.getDefaultSharedPreferences(this)
+            .getString("ACCESS_TOKEN", null))
+
         val nextActivity = if (PreferenceManager.getDefaultSharedPreferences(this)
                 .contains("ACCESS_TOKEN")) {
             MainActivity.createIntent(this)

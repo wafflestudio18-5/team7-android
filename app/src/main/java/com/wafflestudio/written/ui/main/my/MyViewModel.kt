@@ -20,36 +20,45 @@ class MyViewModel @ViewModelInject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
+    private var hasNext: Boolean = false
     private var cursor: String? = null
     private var loadingPostings: Boolean = false
-    private val postingsSubject = BehaviorSubject.create<List<PostingDto>>()
+    private val postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
     fun getUser() = userRepository.getUserMe()
 
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
 
     fun getNextPostings() {
-        if (!loadingPostings) {
+        if (!loadingPostings && hasNext) {
             loadingPostings = true
             getUser().flatMap {
                 userService.getPostingByUserId(it.id, cursor)
             }
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                    postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
+                    hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     loadingPostings = false
                 }, {
+                    loadingPostings = false
                     Timber.d(it)
                 })
                 .also { compositeDisposable.add(it) }
         }
     }
 
-    fun getMyPostings(
-        cursor: String?
-    ): Single<UserGetPostingsByIdResponse> {
-        return getUser().flatMap {
-            userService.getPostingByUserId(userId = it.id, cursor = cursor)
+    fun getMyPostings(): Single<UserGetPostingsByIdResponse> {
+        loadingPostings = true
+        return getUser().flatMap { user ->
+            userService.getPostingByUserId(userId = user.id, cursor = null)
+                .flatMap {
+                    loadingPostings = false
+                    postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
+                    hasNext = it.hasNext
+                    cursor = if (it.hasNext) it.cursor else null
+                    Single.just(it)
+                }
         }
     }
 

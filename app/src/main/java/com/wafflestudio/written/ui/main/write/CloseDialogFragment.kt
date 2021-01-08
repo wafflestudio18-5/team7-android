@@ -3,13 +3,13 @@ package com.wafflestudio.written.ui.main.write
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import com.wafflestudio.written.R
+import com.wafflestudio.written.databinding.FragmentDialogCloseBinding
 
 class CloseDialogFragment : DialogFragment() {
 
+    private lateinit var binding: FragmentDialogCloseBinding
     internal lateinit var listener: CloseDialogListener
 
     interface CloseDialogListener {
@@ -19,35 +19,17 @@ class CloseDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
+            binding = FragmentDialogCloseBinding.inflate(layoutInflater)
             val builder = AlertDialog.Builder(it)
-            val inflater = requireActivity().layoutInflater
-
-            builder.setView(inflater.inflate(R.layout.fragment_dialog_close, null))
-            builder.setTitle(R.string.close_dialog_title)
-            val items = arrayOf(R.string.close_dialog_leave, R.string.close_dialog_continue)
-//            builder.setItems(items, DialogInterface.OnClickListener { dialog, which ->
-//                when (which) {
-//                    0 -> listener.onDialogLeaveClick(this)
-//                    1 -> listener.onDialogContinueClick(this)
-//                }
-//            })
+            builder.setView(binding.root)
+            binding.leaveButton.setOnClickListener {
+                listener.onDialogLeaveClick(this)
+            }
+            binding.continueButton.setOnClickListener {
+                listener.onDialogContinueClick(this)
+            }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
-
-        //        val builder: AlertDialog.Builder? = activity?.let {
-//            AlertDialog.Builder(it)
-//        }
-//
-//        builder?.setTitle(R.string.close_dialog_title)
-//        builder?.setItems(items, DialogInterface.OnClickListener { dialog, which ->
-//            when (which) {
-//                0 -> listener.onDialogLeaveClick(this)
-//                1 -> listener.onDialogContinueClick(this)
-//            }
-//        })
-//        builder?.create()
-//        dialog?.show()
-
     }
 
     override fun onAttach(context: Context) {

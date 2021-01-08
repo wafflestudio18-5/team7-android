@@ -1,5 +1,6 @@
 package com.wafflestudio.written.network.service
 
+import com.wafflestudio.written.network.dto.posting.PostingTitleRequest
 import com.wafflestudio.written.network.dto.posting.PostingUpdateRequest
 import com.wafflestudio.written.network.dto.posting.PostingWriteRequest
 import com.wafflestudio.written.network.service.retrofit.PostingRetrofitService
@@ -10,6 +11,11 @@ class PostingService (
 
     // Posting get Today
     fun getPostingToday() = postingRetrofitService.getPostingToday()
+
+    // Posting create title
+    fun createTitle(
+        name: String
+    ) = postingRetrofitService.createTitle(PostingTitleRequest(name))
 
     // Posting write
     fun writePosting(
@@ -27,10 +33,11 @@ class PostingService (
     fun updatePosting(
         postingId: Long,
         content: String,
-        alignment: String
+        alignment: String,
+        isPublic: Boolean
     ) = postingRetrofitService.updatePosting(
         postingId,
-        PostingUpdateRequest(content, alignment)
+        PostingUpdateRequest(content, alignment, isPublic)
     )
 
     // Posting delete
@@ -45,12 +52,12 @@ class PostingService (
     // Posting get scrapped
     fun getScrappedPostings(
         cursor: String?,
-        pageSize: Int = 5
+        pageSize: Int = 10
     ) = postingRetrofitService.getScrappedPostings(cursor, pageSize.toString())
 
     // Posting get subscribed
     fun getSubscribedPostings(
         cursor: String?,
-        pageSize: Int = 5
+        pageSize: Int = 10
     ) = postingRetrofitService.getSubscribedPostings(cursor, pageSize.toString())
 }
