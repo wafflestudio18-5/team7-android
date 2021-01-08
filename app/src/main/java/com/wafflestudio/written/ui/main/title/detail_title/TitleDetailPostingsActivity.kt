@@ -31,6 +31,11 @@ class TitleDetailPostingsActivity : AppCompatActivity() {
         binding = ActivityTitleDetailPostingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        titleDetailPostingsAdapter = TitleDetailPostingsAdapter(this)
+        titleDetailLayoutManager = LinearLayoutManager(this)
+        binding.titlePostingsRecyclerview.adapter = titleDetailPostingsAdapter
+        binding.titlePostingsRecyclerview.layoutManager = titleDetailLayoutManager
+
         viewModel.observePostings()
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())

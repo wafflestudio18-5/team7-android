@@ -17,7 +17,7 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
     private var cursor: String? = null
     private var hasNext: Boolean = false
     private var loadingPostings: Boolean = false
-    private val postingsSubject = BehaviorSubject.create<List<PostingDto>>()
+    private val postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
 
     var titleId: Int = -1
 
@@ -29,7 +29,7 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
             titleService.getPostingsByTitleId(titleId.toLong(), cursor)
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                    postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     loadingPostings = false
@@ -47,7 +47,7 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
         titleService.getPostingsByTitleId(titleId.toLong(), null)
             .subscribeOn(Schedulers.io())
             .subscribe({
-                postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
                 loadingPostings = false
