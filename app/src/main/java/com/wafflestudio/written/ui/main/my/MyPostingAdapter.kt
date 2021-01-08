@@ -66,7 +66,7 @@ class MyPostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             return lines[0] + '\n' + "..."
         }
         else {
-            return lines[0] + '\n' + lines[1].substring(0, 5) + "..."
+            return lines[0] + '\n' + (if(lines[1].length > 5) lines[1].substring(0, 5) else "") + "..."
         }
     }
 }
