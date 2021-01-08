@@ -32,6 +32,7 @@ class TitleDetailPostingsActivity : AppCompatActivity() {
 
         viewModel.observePostings().subscribe {
             titleDetailPostingsAdapter.postings = it
+            titleDetailPostingsAdapter.notifyDataSetChanged()
         }
 
         val intent = intent

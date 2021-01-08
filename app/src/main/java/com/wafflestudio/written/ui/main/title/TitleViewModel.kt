@@ -2,11 +2,9 @@ package com.wafflestudio.written.ui.main.title
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
-import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.models.TitleDto
 import com.wafflestudio.written.network.service.TitleService
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -46,7 +44,7 @@ class TitleViewModel @ViewModelInject constructor(private val titleService: Titl
         titleService.getTitles(time = null, order = null, official = null, query = null, cursor = cursor)
             .subscribeOn(Schedulers.io())
             .subscribe({
-                titlesSubject.onNext(titlesSubject.value.plus(it.titles?: emptyList()))
+                titlesSubject.onNext(titlesSubject.value.plus(it.titles ?: emptyList()))
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
                 loadingTitles = false

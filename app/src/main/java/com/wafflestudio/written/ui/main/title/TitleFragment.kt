@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.FragmentTitleBinding
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import timber.log.Timber
 
 @AndroidEntryPoint
 class TitleFragment : Fragment() {
@@ -39,6 +39,7 @@ class TitleFragment : Fragment() {
 
         viewModel.observeTitles().subscribe {
             titlePostingAdapter.titles = it
+            titlePostingAdapter.notifyDataSetChanged()
         }
 
         viewModel.getTitles()

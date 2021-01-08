@@ -45,6 +45,7 @@ class SavedFragment : Fragment() {
 
         savedViewModel.observePostings().subscribe {
             savedPostingAdapter.postings = it
+            savedPostingAdapter.notifyDataSetChanged()
         }
 
         savedViewModel.getSavedPostings()

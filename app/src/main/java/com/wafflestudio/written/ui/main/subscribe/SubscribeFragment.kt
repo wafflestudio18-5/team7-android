@@ -45,6 +45,7 @@ class SubscribeFragment : Fragment() {
 
         subscribeViewModel.observePostings().subscribe {
             subscribePostingAdapter.postings = it
+            subscribePostingAdapter.notifyDataSetChanged()
         }
 
         subscribeViewModel.getSubscribedPostings()

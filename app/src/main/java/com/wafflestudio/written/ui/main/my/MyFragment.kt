@@ -47,6 +47,7 @@ class MyFragment : Fragment() {
 
         myViewModel.observePostings().subscribe {
             myPostingAdapter.postings = it
+            myPostingAdapter.notifyDataSetChanged()
         }
 
         // get initial values
