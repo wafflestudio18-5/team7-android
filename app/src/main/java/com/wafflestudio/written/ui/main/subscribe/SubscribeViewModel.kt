@@ -18,7 +18,7 @@ class SubscribeViewModel @ViewModelInject constructor(private val postingService
     private var cursor: String? = null
     private var hasNext: Boolean = false
     private var loadingPostings: Boolean = false
-    private val postingsSubject = BehaviorSubject.create<List<PostingDto>>()
+    private val postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
 
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
 

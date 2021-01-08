@@ -6,16 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.title.detail_title.TitleDetailPostingsActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/title_postings_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_posting"/>
+
     <include
         android:id="@+id/app_bar"
         layout="@layout/title_app_bar_detail_postings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/title_postings_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_posting"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

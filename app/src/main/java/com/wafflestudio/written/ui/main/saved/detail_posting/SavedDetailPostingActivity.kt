@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Gravity
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivitySavedDetailPostingBinding
+import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.ui.writer.WriterActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +36,10 @@ class SavedDetailPostingActivity : AppCompatActivity() {
         binding = ActivitySavedDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.observePosting().subscribe {
+        viewModel.observePosting()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
             modelView(it)
         }
 
@@ -82,7 +86,7 @@ class SavedDetailPostingActivity : AppCompatActivity() {
             else -> Gravity.CENTER
         }
         binding.writerText.text = posting.writer.nickname
-        binding.createdAtText.text = posting.createdAt
+        binding.createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
     }
 
     override fun onDestroy() {

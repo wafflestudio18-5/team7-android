@@ -43,8 +43,12 @@ class SavedFragment : Fragment() {
         binding.savedPostingsRecyclerview.layoutManager = savedLayoutManager
         binding.savedPostingsRecyclerview.adapter = savedPostingAdapter
 
-        savedViewModel.observePostings().subscribe {
+        savedViewModel.observePostings()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
             savedPostingAdapter.postings = it
+            savedPostingAdapter.notifyDataSetChanged()
         }
 
         savedViewModel.getSavedPostings()

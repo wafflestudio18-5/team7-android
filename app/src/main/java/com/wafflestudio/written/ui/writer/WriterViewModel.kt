@@ -7,6 +7,7 @@ import com.wafflestudio.written.models.UserDto
 import com.wafflestudio.written.network.service.PostingService
 import com.wafflestudio.written.network.service.UserService
 import com.wafflestudio.written.repository.UserRepository
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -22,8 +23,10 @@ class WriterViewModel @ViewModelInject constructor(
     private var loadingPostings: Boolean = false
     var writerId: Int = -1
 
-    private var postingsSubject = BehaviorSubject.create<List<PostingDto>>()
+    private var postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
     private val compositeDisposable = CompositeDisposable()
+
+    fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
 
     fun getWriter() = userService.getUserById(userId = writerId)
 
