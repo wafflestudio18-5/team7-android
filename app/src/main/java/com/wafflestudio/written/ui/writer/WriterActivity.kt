@@ -68,7 +68,7 @@ class WriterActivity : AppCompatActivity() {
                     }
                     false -> {
                         binding.subscribeText.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-                        binding.subscribeText.setTextColor(ContextCompat.getColor(this, R.color.black))
+                        binding.subscribeText.setTextColor(ContextCompat.getColor(this, R.color.default_text_color))
                     }
                 }
             }

@@ -14,4 +14,5 @@
     <color name="dummy">#B3FFFFFF</color>
     <color name="public_background">#707070</color>
     <color name="transparent">#00000000</color>
+    <color name="default_text_color">#808080</color>
 </resources>
