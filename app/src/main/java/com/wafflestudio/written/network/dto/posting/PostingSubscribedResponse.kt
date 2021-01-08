@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.wafflestudio.written.models.PostingDto
 
 data class PostingSubscribedResponse (
-    val postings: List<PostingDto>,
+    val postings: List<PostingDto>?,
     @Json(name = "has_next")
     val hasNext: Boolean,
     val cursor: String?

@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.FragmentTitleBinding
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
+@AndroidEntryPoint
 class TitleFragment : Fragment() {
 
     private lateinit var binding: FragmentTitleBinding

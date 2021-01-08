@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.FragmentMyBinding
 import com.wafflestudio.written.models.PostingDto
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -17,6 +18,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_my.*
 import timber.log.Timber
 
+@AndroidEntryPoint
 class MyFragment : Fragment() {
 
     private lateinit var binding: FragmentMyBinding
@@ -53,6 +55,8 @@ class MyFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { user ->
                 myViewModel.getMyPostings()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .map { user }
             }
             .subscribe({ user ->

@@ -23,7 +23,7 @@ class MyViewModel @ViewModelInject constructor(
     private var hasNext: Boolean = false
     private var cursor: String? = null
     private var loadingPostings: Boolean = false
-    private val postingsSubject = BehaviorSubject.create<List<PostingDto>>()
+    private val postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
     fun getUser() = userRepository.getUserMe()
 
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
@@ -36,7 +36,7 @@ class MyViewModel @ViewModelInject constructor(
             }
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                    postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     loadingPostings = false
@@ -54,7 +54,7 @@ class MyViewModel @ViewModelInject constructor(
             userService.getPostingByUserId(userId = user.id, cursor = null)
                 .flatMap {
                     loadingPostings = false
-                    postingsSubject.onNext(postingsSubject.value.plus(it.postings))
+                    postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     Single.just(it)
