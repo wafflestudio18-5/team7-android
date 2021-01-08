@@ -31,7 +31,7 @@ class TitlePostingAdapter(private val context: Context) : RecyclerView.Adapter<T
 
         holder.itemView.setOnClickListener {
             val intent = TitleDetailPostingsActivity.createIntent(context)
-            intent.putExtra("titleId", title.id)
+            intent.putExtra("titleId", title.id.toInt())
             context.startActivity(intent)
         }
     }
@@ -45,11 +45,11 @@ class TitlePostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(title: TitleDto) {
         titleText.text = title.name
-        titleNumText.text = title.id
+        titleNumText.text = "# " + title.id
         writtenOpenText.text = modifyWrittenOpen(title.countPublicPostings, title.countAllPostings)
     }
 
     private fun modifyWrittenOpen(countPublic: Int, countAll: Int): String {
-        return countPublic.toString() + "씀 / " + countAll.toString() + "공개"
+        return countAll.toString() + "씀 / " + countPublic.toString() + "공개"
     }
 }
