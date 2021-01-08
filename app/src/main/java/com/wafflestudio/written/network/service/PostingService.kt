@@ -1,5 +1,6 @@
 package com.wafflestudio.written.network.service
 
+import com.wafflestudio.written.network.dto.posting.PostingTitleRequest
 import com.wafflestudio.written.network.dto.posting.PostingUpdateRequest
 import com.wafflestudio.written.network.dto.posting.PostingWriteRequest
 import com.wafflestudio.written.network.service.retrofit.PostingRetrofitService
@@ -10,6 +11,11 @@ class PostingService (
 
     // Posting get Today
     fun getPostingToday() = postingRetrofitService.getPostingToday()
+
+    // Posting create title
+    fun createTitle(
+        name: String
+    ) = postingRetrofitService.createTitle(PostingTitleRequest(name))
 
     // Posting write
     fun writePosting(

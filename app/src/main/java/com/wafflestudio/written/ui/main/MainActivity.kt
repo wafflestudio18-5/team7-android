@@ -19,7 +19,6 @@ import com.wafflestudio.written.ui.main.write.WriteFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.content_main.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -42,53 +41,53 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<WriteFragment>(R.id.fragment_container_view)
+                add<WriteFragment>(R.id.fragment_container_view_main)
             }
         }
 
         menu_button.setOnClickListener {
-            if(!drawer_layout.isDrawerOpen(GravityCompat.START)) {
-                drawer_layout.openDrawer(GravityCompat.START, false)
+            if(!drawer_layout_main.isDrawerOpen(GravityCompat.START)) {
+                drawer_layout_main.openDrawer(GravityCompat.START, false)
             }
         }
 
         drawer_write.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<WriteFragment>(R.id.fragment_container_view)
-                drawer_layout.closeDrawer(GravityCompat.START, false)
+                replace<WriteFragment>(R.id.fragment_container_view_main)
+                drawer_layout_main.closeDrawer(GravityCompat.START, false)
             }
         }
 
         drawer_title.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<TitleFragment>(R.id.fragment_container_view)
-                drawer_layout.closeDrawer(GravityCompat.START, false)
+                replace<TitleFragment>(R.id.fragment_container_view_main)
+                drawer_layout_main.closeDrawer(GravityCompat.START, false)
             }
         }
 
         drawer_my.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<MyFragment>(R.id.fragment_container_view)
-                drawer_layout.closeDrawer(GravityCompat.START, false)
+                replace<MyFragment>(R.id.fragment_container_view_main)
+                drawer_layout_main.closeDrawer(GravityCompat.START, false)
             }
         }
 
         drawer_subscribe.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<SubscribeFragment>(R.id.fragment_container_view)
-                drawer_layout.closeDrawer(GravityCompat.START, false)
+                replace<SubscribeFragment>(R.id.fragment_container_view_main)
+                drawer_layout_main.closeDrawer(GravityCompat.START, false)
             }
         }
 
         drawer_saved.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<SavedFragment>(R.id.fragment_container_view)
-                drawer_layout.closeDrawer(GravityCompat.START, false)
+                replace<SavedFragment>(R.id.fragment_container_view_main)
+                drawer_layout_main.closeDrawer(GravityCompat.START, false)
             }
         }
 

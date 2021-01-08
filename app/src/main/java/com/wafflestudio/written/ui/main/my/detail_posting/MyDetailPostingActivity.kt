@@ -32,6 +32,7 @@ class MyDetailPostingActivity : AppCompatActivity() {
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMyDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)

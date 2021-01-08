@@ -9,8 +9,13 @@ import retrofit2.http.*
 interface PostingRetrofitService {
 
     // Posting get Today
-    @GET("postings/today/")
+    @GET("titles/today/")
     fun getPostingToday(): Single<PostingTodayResponse>
+
+    @POST("titles/")
+    fun createTitle(
+        @Body Body: PostingTitleRequest
+    ): Single<PostingTitleResponse>
 
     // Posting write
     @POST("postings/")

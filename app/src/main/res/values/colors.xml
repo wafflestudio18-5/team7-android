@@ -11,6 +11,7 @@
     <color name="text_background">#FCFCFC</color>
     <color name="border">#E8E8E8</color>
     <color name="facebook">#3b5998</color>
+    <color name="dummy">#B3FFFFFF</color>
     <color name="public_background">#707070</color>
     <color name="transparent">#00000000</color>
 </resources>
