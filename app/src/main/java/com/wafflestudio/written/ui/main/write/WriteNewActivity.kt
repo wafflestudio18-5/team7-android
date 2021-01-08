@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.content_write_new.*
 import timber.log.Timber
 
 @AndroidEntryPoint
-class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogListener {
+class WriteNewActivity : AppCompatActivity() {
 
     companion object {
         private const val TITLE_KEY = "title"
@@ -182,14 +182,6 @@ class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogLis
     fun showCloseDialog() {
         val dialog = CloseDialogFragment()
         dialog.show(supportFragmentManager, "CloseDialogFragment")
-    }
-
-    override fun onDialogLeaveClick(dialog: DialogFragment) {
-        finish()
-    }
-
-    override fun onDialogContinueClick(dialog: DialogFragment) {
-        dialog.dismiss()
     }
 
 }
