@@ -13,8 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Written"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".ui.main.title.detail_title.TitleDetailPostingsActivity"></activity>
+        <activity android:name=".ui.settings.edit.EditUserActivity"></activity>
+        <activity android:name=".ui.settings.SettingsActivity" />
+        <activity android:name=".ui.main.title.detail_title.TitleDetailPostingsActivity" />
         <activity android:name=".ui.main.saved.detail_posting.SavedDetailPostingActivity" />
         <activity android:name=".ui.main.my.detail_posting.MyDetailPostingActivity" />
         <activity android:name=".ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity" />
@@ -26,7 +27,6 @@
             android:name=".ui.main.write.WriteNewActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.signup.SignUpActivity" />
-
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/AppTheme.Launcher">
@@ -36,6 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
