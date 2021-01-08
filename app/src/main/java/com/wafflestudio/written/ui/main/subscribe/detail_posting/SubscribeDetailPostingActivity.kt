@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivitySubscribeDetailPostingBinding
+import com.wafflestudio.written.databinding.SubscribeBottomAppBarDetailPostingBinding
 import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.ui.writer.WriterActivity
@@ -38,6 +39,7 @@ class SubscribeDetailPostingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySubscribeDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         viewModel.observePosting()
             .subscribeOn(AndroidSchedulers.mainThread())

@@ -23,7 +23,7 @@ class WriterViewModel @ViewModelInject constructor(
     private var loadingPostings: Boolean = false
     var writerId: Int = -1
 
-    private var postingsSubject = BehaviorSubject.create<List<PostingDto>>()
+    private var postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
     private val compositeDisposable = CompositeDisposable()
 
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
