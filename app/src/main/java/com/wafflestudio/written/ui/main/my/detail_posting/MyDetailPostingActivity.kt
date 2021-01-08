@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.wafflestudio.written.R
 import com.wafflestudio.written.databinding.ActivityMyDetailPostingBinding
+import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -35,7 +36,10 @@ class MyDetailPostingActivity : AppCompatActivity() {
         binding = ActivityMyDetailPostingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.observePosting().subscribe {
+        viewModel.observePosting()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
             modelView(it)
         }
 
@@ -95,7 +99,7 @@ class MyDetailPostingActivity : AppCompatActivity() {
         binding.titleText.text = posting.title
         binding.contentText.text = posting.content
         binding.writerText.text = posting.writer.nickname
-        binding.createdAtText.text = posting.createdAt
+        binding.createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
     }
 
     override fun onDestroy() {

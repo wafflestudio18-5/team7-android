@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.R
+import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.ui.writer.detail_posting.WriterDetailPostingActivity
 import kotlinx.android.synthetic.main.item_posting.view.*
@@ -46,7 +47,7 @@ class WriterPostingViewHolder(view: View, context: Context) : RecyclerView.ViewH
     fun render(posting: PostingDto) {
         titleText.text = posting.title
         contentText.text = posting.content
-        createdAtText.text = posting.createdAt // TODO
+        createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
         writerText.text = posting.writer.nickname
     }
 
