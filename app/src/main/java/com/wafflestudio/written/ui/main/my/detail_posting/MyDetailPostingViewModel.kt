@@ -14,8 +14,10 @@ class MyDetailPostingViewModel @ViewModelInject constructor(private val postingS
 
     private val postingSubject = BehaviorSubject.create<PostingDto>()
     private val compositeDisposable = CompositeDisposable()
+    private val confirmDeleteSubject = BehaviorSubject.createDefault(false)
 
     fun observePosting(): Observable<PostingDto> = postingSubject.hide()
+    fun observeConfirmDelete(): Observable<Boolean> = confirmDeleteSubject.hide()
 
     fun getPostingDetail(postingId: Int) {
         postingService.getPostingById(postingId.toLong())
@@ -52,6 +54,10 @@ class MyDetailPostingViewModel @ViewModelInject constructor(private val postingS
 
     fun deletePosting() = postingService.deletePosting(postingSubject.value.id.toLong())
 
+    fun confirmDelete() {
+        confirmDeleteSubject.onNext(true)
+    }
+    fun cancelDelete() = confirmDeleteSubject.onNext(false)
 
     override fun onCleared() {
         super.onCleared()

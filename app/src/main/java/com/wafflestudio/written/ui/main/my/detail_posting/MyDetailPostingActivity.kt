@@ -5,12 +5,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.wafflestudio.written.R
 import com.wafflestudio.written.databinding.ActivityMyDetailPostingBinding
 import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
+import com.wafflestudio.written.ui.main.write.CloseDialogFragment
+import com.wafflestudio.written.ui.main.write.WriteNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -21,7 +24,7 @@ import timber.log.Timber
 class MyDetailPostingActivity : AppCompatActivity() {
 
     companion object {
-        fun createIntent(context : Context): Intent {
+        fun createIntent(context: Context): Intent {
             return Intent(context, MyDetailPostingActivity::class.java)
         }
     }
@@ -41,11 +44,11 @@ class MyDetailPostingActivity : AppCompatActivity() {
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-            modelView(it)
-        }
+                modelView(it)
+            }
 
         val intent = intent
-        val posting: PostingDto = intent.getParcelableExtra("posting")?: run {
+        val posting: PostingDto = intent.getParcelableExtra("posting") ?: run {
             finish()
             return
         }
@@ -61,18 +64,30 @@ class MyDetailPostingActivity : AppCompatActivity() {
             viewModel.changePublic()
         }
 
-        // TODO : EditText
+        binding.bottomAppBar.editText.setOnClickListener {
+            startActivity(WriteNewActivity.createIntent(this, posting.title, posting))
+        }
 
         binding.bottomAppBar.deleteText.setOnClickListener {
-            viewModel.deletePosting()
+            showDeleteDialog()
+            viewModel.observeConfirmDelete()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    finish()
-                }, {
-                    Timber.d(it)
-                })
-                .also { compositeDisposable.add(it) }
+                .subscribe {
+                    Timber.d("boolean! $it")
+                    if (it) {
+                        viewModel.deletePosting()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                Toast.makeText(this, "deleted!", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }, {
+                                Timber.d(it)
+                            })
+                            .also { compositeDisposable.add(it) }
+                    }
+                }
         }
 
 
@@ -80,18 +95,34 @@ class MyDetailPostingActivity : AppCompatActivity() {
 
     private fun modelView(posting: PostingDto) {
 
-        when(posting.isPublic) {
+        when (posting.isPublic) {
             true -> {
-                binding.bottomAppBar.publicText.background = ContextCompat.getDrawable(this, R.drawable.layout_public_background)
-                binding.bottomAppBar.publicText.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.bottomAppBar.publicText.background =
+                    ContextCompat.getDrawable(this, R.drawable.layout_public_background)
+                binding.bottomAppBar.publicText.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.white
+                    )
+                )
             }
             false -> {
-                binding.bottomAppBar.publicText.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-                binding.bottomAppBar.publicText.setTextColor(ContextCompat.getColor(this, R.color.default_text_color))
+                binding.bottomAppBar.publicText.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.transparent
+                    )
+                )
+                binding.bottomAppBar.publicText.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.default_text_color
+                    )
+                )
             }
         }
 
-        binding.contentText.gravity = when(posting.alignment) {
+        binding.contentText.gravity = when (posting.alignment) {
             "LEFT" -> Gravity.LEFT
             "CENTER" -> Gravity.CENTER
             else -> Gravity.CENTER
@@ -101,6 +132,11 @@ class MyDetailPostingActivity : AppCompatActivity() {
         binding.contentText.text = posting.content
         binding.writerText.text = posting.writer.nickname
         binding.createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
+    }
+
+    fun showDeleteDialog() {
+        val dialog = DeleteDialogFragment()
+        dialog.show(supportFragmentManager, "DeleteDialogFragment")
     }
 
     override fun onDestroy() {

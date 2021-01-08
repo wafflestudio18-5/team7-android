@@ -3,6 +3,7 @@ package com.wafflestudio.written.network.service.retrofit
 import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.network.dto.title.TitleGetResponse
 import com.wafflestudio.written.network.dto.title.TitlePostingGetByIdResponse
+import com.wafflestudio.written.network.dto.title.TitleTodayResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -26,5 +27,11 @@ interface TitleRetrofitService {
         @Path("title_id") titleId: Long,
         @Query("cursor") cursor: String?
     ): Single<TitlePostingGetByIdResponse>
+
+    @GET("titles/today/")
+    fun getTitlesToday(
+        @Query("cursor") cursor: String?,
+        @Query("page_size") pageSize: String
+    ): Single<TitleTodayResponse>
 
 }

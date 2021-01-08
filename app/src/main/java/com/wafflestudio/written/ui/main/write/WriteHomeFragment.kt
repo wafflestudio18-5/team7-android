@@ -52,7 +52,7 @@ class WriteHomeFragment : Fragment() {
 
         binding.writeButton.setOnClickListener {
             val intent =
-                WriteNewActivity.createIntent(requireActivity(), binding.titleText.text.toString())
+                WriteNewActivity.createIntent(requireActivity(), binding.titleText.text.toString(), null)
             activity?.startActivity(intent)
         }
 

@@ -5,7 +5,6 @@ import com.squareup.moshi.Moshi
 import com.wafflestudio.written.App
 import com.wafflestudio.written.BuildConfig
 import com.wafflestudio.written.network.service.PostingService
-import com.wafflestudio.written.network.service.TempService
 import com.wafflestudio.written.network.service.TitleService
 import com.wafflestudio.written.network.service.UserService
 import com.wafflestudio.written.network.service.retrofit.PostingRetrofitService
@@ -69,12 +68,6 @@ class NetworkModule {
             .client(okHttpClient)
             .baseUrl(baseUrl)
             .build()
-
-    @Provides
-    @Singleton
-    fun provideTempService(retrofit: Retrofit): TempService {
-        return retrofit.create(TempService::class.java)
-    }
 
     @Provides
     @Singleton

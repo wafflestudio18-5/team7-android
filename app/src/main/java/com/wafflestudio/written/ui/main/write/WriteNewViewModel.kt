@@ -15,8 +15,10 @@ import java.util.*
 
 class WriteNewViewModel @ViewModelInject constructor(private val service: PostingService) : ViewModel() {
 
+    private val postingSubject = BehaviorSubject.create<PostingDto>()
     private val expandSubject = BehaviorSubject.createDefault(false)
 
+    fun observePosting(): Observable<PostingDto> = postingSubject.hide()
     fun observeExpand(): Observable<Boolean> = expandSubject.hide()
 
     fun expand() = expandSubject.onNext(true)
@@ -30,6 +32,14 @@ class WriteNewViewModel @ViewModelInject constructor(private val service: Postin
     fun createTitle(name: String): Completable =
         service.createTitle(name)
             .subscribeOn(Schedulers.io())
+            .ignoreElement()
+
+    fun updatePosting(postingId: Long, content: String, alignment: String, isPublic: Boolean): Completable =
+        service.updatePosting(postingId, content, alignment, isPublic)
+            .subscribeOn(Schedulers.io())
+            .doOnSuccess {
+                postingSubject.onNext(it)
+            }
             .ignoreElement()
 
 }

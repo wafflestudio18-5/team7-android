@@ -20,4 +20,9 @@ class TitleService(
         cursor: String?
     ) = titleRetrofitService.getPostingsByTitleId(titleId, cursor)
 
+    fun getTitlesToday(
+        cursor: String?,
+        pageSize: Int = 10
+    ) = titleRetrofitService.getTitlesToday(cursor, pageSize.toString())
+
 }

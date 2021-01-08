@@ -19,6 +19,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.wafflestudio.written.R
 import com.wafflestudio.written.databinding.ActivityWriteNewBinding
+import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.ui.main.my.detail_posting.MyDetailPostingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -33,11 +34,12 @@ class WriteNewActivity : AppCompatActivity() {
 
     companion object {
         private const val TITLE_KEY = "title"
-
-        fun createIntent(context: Context, title: String): Intent {
+        private const val POSTING_KEY = "posting"
+        fun createIntent(context: Context, title: String, posting: PostingDto?): Intent {
             Timber.d("title $title")
             return Intent(context, WriteNewActivity::class.java).apply {
                 putExtra(TITLE_KEY, title)
+                putExtra(POSTING_KEY, posting)
             }
         }
     }
@@ -55,6 +57,18 @@ class WriteNewActivity : AppCompatActivity() {
             Timber.d("intent title $it")
             binding.titleText.text = it
             binding.editTitleText.setText(it)
+        }
+
+        var posting: PostingDto? = null
+        intent.getParcelableExtra<PostingDto>(POSTING_KEY)?.let {
+            posting = it
+            content_edit_text.setText(it.content)
+            Timber.d(it.alignment)
+            if (it.alignment.equals("CENTER")) {
+                Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show()
+                text_align_button.setImageResource(R.drawable.text_align_center_button)
+                content_edit_text.gravity = Gravity.LEFT
+            }
         }
 
         var appBarVisible = false
@@ -124,21 +138,43 @@ class WriteNewActivity : AppCompatActivity() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             } else {
-                val title = binding.titleText.text.toString()
-                val content = content_edit_text.text.toString()
-                val alignment = if (centerAlignment) "CENTER" else "LEFT"
-                viewModel.writePosting(title, content, alignment)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        val intent = MyDetailPostingActivity.createIntent(this)
-                        intent.putExtra("posting", it)
-                        startActivity(MyDetailPostingActivity.createIntent(this))
-                        finish()
-                    }, {
-                        Timber.d(it)
-                        Toast.makeText(this, "Failed to make post", Toast.LENGTH_SHORT).show()
-                    })
+                posting?.let {
+                    val postingId = it.id.toLong()
+                    val content = content_edit_text.text.toString()
+                    val alignment = if (centerAlignment) "CENTER" else "LEFT"
+                    val isPublic = it.isPublic
+                    viewModel.updatePosting(postingId, content, alignment, isPublic)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            viewModel.observePosting()
+                                .subscribe {
+                                    val intent = MyDetailPostingActivity.createIntent(this)
+                                    intent.putExtra("posting", it)
+                                    Timber.d(it.content)
+                                    startActivity(MyDetailPostingActivity.createIntent(this))
+                                    finish()
+                                }
+                        }, {
+                            Toast.makeText(this, "Failed to edit post", Toast.LENGTH_SHORT).show()
+                        })
+                } ?: run {
+                    val title = binding.titleText.text.toString()
+                    val content = content_edit_text.text.toString()
+                    val alignment = if (centerAlignment) "CENTER" else "LEFT"
+                    viewModel.writePosting(title, content, alignment)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            val intent = MyDetailPostingActivity.createIntent(this)
+                            intent.putExtra("posting", it)
+                            startActivity(MyDetailPostingActivity.createIntent(this))
+                            finish()
+                        }, {
+                            Timber.d(it)
+                            Toast.makeText(this, "Failed to make post", Toast.LENGTH_SHORT).show()
+                        })
+                }
             }
         }
 
@@ -168,7 +204,7 @@ class WriteNewActivity : AppCompatActivity() {
             viewModel.createTitle(binding.editTitleText.text.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ( {
+                .subscribe({
                     Toast.makeText(this, "!!!", Toast.LENGTH_SHORT).show()
                 }, {
                     Timber.d(it)
