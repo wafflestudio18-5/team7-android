@@ -1,39 +1,27 @@
 package com.wafflestudio.written.ui.main.write
 
-import android.R.attr.visible
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
-import android.transition.ChangeBounds
-import android.transition.TransitionManager
-import android.transition.TransitionSet
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
-import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.os.HandlerCompat.postDelayed
-import bolts.Task.delay
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.wafflestudio.written.R
 import com.wafflestudio.written.databinding.ActivityWriteNewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_write_new.*
 import kotlinx.android.synthetic.main.content_write_new.*
 import timber.log.Timber
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.math.exp
 
-
-class WriteNewActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class WriteNewActivity : AppCompatActivity(), CloseDialogFragment.CloseDialogListener {
 
     companion object {
         fun createIntent(context: Context): Intent {
@@ -87,6 +75,10 @@ class WriteNewActivity : AppCompatActivity() {
             }
         }
 
+        binding.spellCheckButton.setOnClickListener {
+            TODO()
+        }
+
         content_edit_text.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -102,11 +94,12 @@ class WriteNewActivity : AppCompatActivity() {
         })
 
         binding.closeText.setOnClickListener {
-            TODO()
+            showCloseDialog()
         }
 
         binding.completedText.setOnClickListener {
-
+            startActivity(WriteCompletedActivity.createIntent(this))
+            finish()
         }
 
         viewModel.observeExpand().subscribe { expand ->
@@ -134,6 +127,19 @@ class WriteNewActivity : AppCompatActivity() {
             viewModel.close()
         }
 
+    }
+
+    fun showCloseDialog() {
+        val dialog = CloseDialogFragment()
+        dialog.show(supportFragmentManager, "CloseDialogFragment")
+    }
+
+    override fun onDialogLeaveClick(dialog: DialogFragment) {
+        finish()
+    }
+
+    override fun onDialogContinueClick(dialog: DialogFragment) {
+        dialog.dismiss()
     }
 
 }
