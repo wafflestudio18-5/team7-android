@@ -87,7 +87,7 @@ class MyDetailPostingActivity : AppCompatActivity() {
             }
             false -> {
                 binding.bottomAppBar.publicText.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-                binding.bottomAppBar.publicText.setTextColor(ContextCompat.getColor(this, R.color.black))
+                binding.bottomAppBar.publicText.setTextColor(ContextCompat.getColor(this, R.color.default_text_color))
             }
         }
 

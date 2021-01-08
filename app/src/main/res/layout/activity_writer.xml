@@ -8,6 +8,7 @@
     android:background="#F7F7F7">
 
     <TextView
+        android:id="@+id/back_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanum_myeongjo"
@@ -101,9 +102,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_postings_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         tools:listitem="@layout/item_posting"
-        app:layout_constraintTop_toBottomOf="@id/divide_line"/>
+        app:layout_constraintTop_toBottomOf="@id/divide_line"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 
