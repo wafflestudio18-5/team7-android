@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.R
+import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity
 import kotlinx.android.synthetic.main.item_posting.view.*
@@ -56,7 +57,7 @@ class SubscribePostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             "CENTER" -> Gravity.CENTER
             else -> Gravity.CENTER
         }
-        createdAtText.text = posting.createdAt // TODO
+        createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
         writerText.text = posting.writer.nickname
     }
 

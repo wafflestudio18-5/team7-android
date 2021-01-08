@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivityWriterDetailPostingBinding
+import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -74,7 +75,7 @@ class WriterDetailPostingActivity : AppCompatActivity() {
         binding.titleText.text = posting.title
         binding.contentText.text = posting.content
         binding.writerText.text = posting.writer.nickname
-        binding.createdAtText.text = posting.createdAt
+        binding.createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
     }
 
     override fun onDestroy() {

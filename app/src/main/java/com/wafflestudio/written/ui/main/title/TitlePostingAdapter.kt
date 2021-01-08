@@ -50,6 +50,6 @@ class TitlePostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun modifyWrittenOpen(countPublic: Int, countAll: Int): String {
-        return countAll.toString() + "씀 / " + countPublic.toString() + "공개"
+        return countAll.toString() + " 씀 / " + countPublic.toString() + " 공개"
     }
 }

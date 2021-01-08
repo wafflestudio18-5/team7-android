@@ -10,6 +10,7 @@ import android.widget.TextView.TEXT_ALIGNMENT_CENTER
 import android.widget.TextView.TEXT_ALIGNMENT_TEXT_START
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.R
+import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.ui.main.subscribe.SubscribePostingViewHolder
 import com.wafflestudio.written.ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity
@@ -61,7 +62,7 @@ class TitleDetailPostingsViewHolder(view: View): RecyclerView.ViewHolder(view) {
             "CENTER" -> Gravity.CENTER
             else -> Gravity.CENTER
         }
-        createdAtText.text = posting.createdAt // TODO
+        createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
         writerText.text = posting.writer.nickname
     }
 }

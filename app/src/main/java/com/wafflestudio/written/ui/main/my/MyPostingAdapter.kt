@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.R
+import com.wafflestudio.written.extension.StringExtension
 import com.wafflestudio.written.models.PostingDto
 import com.wafflestudio.written.ui.main.my.detail_posting.MyDetailPostingActivity
 import kotlinx.android.synthetic.main.item_posting_my.view.*
@@ -48,7 +49,7 @@ class MyPostingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun render(posting: PostingDto) {
         titleText.text = posting.title
         contentText.text = modifyContent(posting.content)
-        createdAtText.text = posting.createdAt  // TODO : String 수정해서 넣기
+        createdAtText.text = StringExtension().modifyCreatedAt(posting.createdAt)
         when (posting.isPublic) {
             true -> {
                 publicText.visibility = VISIBLE
