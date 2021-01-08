@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.ActivityTitleDetailPostingsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 @AndroidEntryPoint
 class TitleDetailPostingsActivity : AppCompatActivity() {
@@ -30,8 +31,12 @@ class TitleDetailPostingsActivity : AppCompatActivity() {
         binding = ActivityTitleDetailPostingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.observePostings().subscribe {
+        viewModel.observePostings()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
             titleDetailPostingsAdapter.postings = it
+            titleDetailPostingsAdapter.notifyDataSetChanged()
         }
 
         val intent = intent

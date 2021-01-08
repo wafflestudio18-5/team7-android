@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.FragmentTitleBinding
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import timber.log.Timber
 
 @AndroidEntryPoint
 class TitleFragment : Fragment() {
@@ -37,8 +38,12 @@ class TitleFragment : Fragment() {
         binding.titleRecyclerview.layoutManager = titleLayoutManager
         binding.titleRecyclerview.adapter = titlePostingAdapter
 
-        viewModel.observeTitles().subscribe {
+        viewModel.observeTitles()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
             titlePostingAdapter.titles = it
+            titlePostingAdapter.notifyDataSetChanged()
         }
 
         viewModel.getTitles()
@@ -56,6 +61,4 @@ class TitleFragment : Fragment() {
             }
         })
     }
-
-
 }

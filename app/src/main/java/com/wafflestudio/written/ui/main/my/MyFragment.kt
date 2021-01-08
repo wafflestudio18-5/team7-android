@@ -45,8 +45,12 @@ class MyFragment : Fragment() {
         binding.myPostingsRecyclerview.layoutManager = myLayoutManager
         binding.myPostingsRecyclerview.adapter = myPostingAdapter
 
-        myViewModel.observePostings().subscribe {
+        myViewModel.observePostings()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
             myPostingAdapter.postings = it
+            myPostingAdapter.notifyDataSetChanged()
         }
 
         // get initial values

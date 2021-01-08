@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.R
 import com.wafflestudio.written.models.TitleDto
-import com.wafflestudio.written.ui.main.subscribe.detail_posting.SubscribeDetailPostingActivity
 import com.wafflestudio.written.ui.main.title.detail_title.TitleDetailPostingsActivity
 import kotlinx.android.synthetic.main.item_title.view.*
 

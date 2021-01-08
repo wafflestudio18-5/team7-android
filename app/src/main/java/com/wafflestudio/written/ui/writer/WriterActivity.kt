@@ -45,6 +45,14 @@ class WriterActivity : AppCompatActivity() {
         binding.myPostingsRecyclerview.adapter = writerPostingAdapter
         binding.myPostingsRecyclerview.layoutManager = writerLayoutManager
 
+        writerViewModel.observePostings()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                writerPostingAdapter.postings = it
+                writerPostingAdapter.notifyDataSetChanged()
+            }
+
         writerViewModel.getWriter()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
