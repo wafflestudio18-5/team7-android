@@ -7,11 +7,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/title_postings_recyclerview"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_posting"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_posting" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

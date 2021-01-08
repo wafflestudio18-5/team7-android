@@ -15,4 +15,8 @@
     <string name="close_dialog_continue">계속 쓰기</string>
     <string name="close_dialog_leave">나가기</string>
     <string name="incomplete_snackbar_text">내용을 입력해주세요.</string>
+    <string name="delete_dialog_title">정말로 삭제 하시겠습니까?</string>
+    <string name="delete_dialog_delete">삭제하기</string>
+    <string name="delete_dialog_cancel">취소</string>
+    <string name="all_titles_text">전체 기간 중 최근에 등록된 모든 글감</string>
 </resources>

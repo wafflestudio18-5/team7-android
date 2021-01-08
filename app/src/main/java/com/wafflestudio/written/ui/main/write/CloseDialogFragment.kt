@@ -5,7 +5,9 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.wafflestudio.written.databinding.FragmentDialogCloseBinding
+import com.wafflestudio.written.ui.main.my.detail_posting.MyDetailPostingViewModel
 
 class CloseDialogFragment : DialogFragment() {
 

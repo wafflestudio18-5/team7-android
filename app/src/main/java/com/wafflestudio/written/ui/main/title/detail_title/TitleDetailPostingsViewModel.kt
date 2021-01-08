@@ -18,10 +18,12 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
     private var hasNext: Boolean = false
     private var loadingPostings: Boolean = false
     private val postingsSubject = BehaviorSubject.createDefault<List<PostingDto>>(emptyList())
+    private val titleSubject = BehaviorSubject.createDefault("")
 
     var titleId: Int = -1
 
     fun observePostings(): Observable<List<PostingDto>> = postingsSubject.hide()
+    fun observeTitle(): Observable<String> = titleSubject.hide()
 
     fun getNextPostings() {
         if(!loadingPostings && hasNext) {
@@ -30,6 +32,7 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
+                    titleSubject.onNext(it.title)
                     hasNext = it.hasNext
                     cursor = if (it.hasNext) it.cursor else null
                     loadingPostings = false
@@ -48,6 +51,9 @@ class TitleDetailPostingsViewModel @ViewModelInject constructor(private val titl
             .subscribeOn(Schedulers.io())
             .subscribe({
                 postingsSubject.onNext(postingsSubject.value.plus(it.postings?: emptyList()))
+                titleSubject.onNext(it.title)
+                val title = it.title
+                Timber.d("meep $title")
                 hasNext = it.hasNext
                 cursor = if (it.hasNext) it.cursor else null
                 loadingPostings = false

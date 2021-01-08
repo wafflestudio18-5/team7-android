@@ -8,8 +8,12 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.written.databinding.ActivityTitleDetailPostingsBinding
+import com.wafflestudio.written.ui.main.write.WriteNewActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.android.synthetic.main.title_app_bar_detail_postings.*
+import timber.log.Timber
 
 @AndroidEntryPoint
 class TitleDetailPostingsActivity : AppCompatActivity() {
@@ -61,6 +65,24 @@ class TitleDetailPostingsActivity : AppCompatActivity() {
                 }
             }
         })
+
+        back_text.setOnClickListener {
+            finish()
+        }
+
+        var title = ""
+        viewModel.observeTitle()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Timber.d(it)
+                title = it
+            }
+
+        write_text.setOnClickListener {
+            Timber.d("hello??? $title")
+            startActivity(WriteNewActivity.createIntent(this, title, null))
+        }
 
     }
 
