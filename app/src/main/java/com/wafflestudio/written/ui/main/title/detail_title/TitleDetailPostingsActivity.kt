@@ -44,14 +44,23 @@ class TitleDetailPostingsActivity : AppCompatActivity() {
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-            titleDetailPostingsAdapter.postings = it
-            titleDetailPostingsAdapter.notifyDataSetChanged()
+                binding.appBar.titleText.text = viewModel.title
+                titleDetailPostingsAdapter.postings = it
+                titleDetailPostingsAdapter.notifyDataSetChanged()
         }
 
         val intent = intent
         viewModel.titleId = intent.getIntExtra("titleId", -1)
 
         viewModel.getPostings()
+
+        binding.appBar.backText.setOnClickListener {
+            finish()
+        }
+
+        binding.appBar.writeText.setOnClickListener {
+            startActivity(WriteNewActivity.createIntent(this, viewModel.title, null))
+        }
 
         binding.titlePostingsRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -70,18 +79,9 @@ class TitleDetailPostingsActivity : AppCompatActivity() {
             finish()
         }
 
-        var title = ""
-        viewModel.observeTitle()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                Timber.d(it)
-                title = it
-            }
-
         write_text.setOnClickListener {
             Timber.d("hello??? $title")
-            startActivity(WriteNewActivity.createIntent(this, title, null))
+            startActivity(WriteNewActivity.createIntent(this, viewModel.title, null))
         }
 
     }

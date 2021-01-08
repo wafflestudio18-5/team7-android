@@ -116,7 +116,7 @@ class MyDetailPostingActivity : AppCompatActivity() {
                 binding.bottomAppBar.publicText.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        R.color.black
+                        R.color.default_text_color
                     )
                 )
             }

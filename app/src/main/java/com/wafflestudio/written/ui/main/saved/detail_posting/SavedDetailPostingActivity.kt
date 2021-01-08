@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.wafflestudio.written.databinding.ActivitySavedDetailPostingBinding
 import com.wafflestudio.written.extension.StringExtension
@@ -67,6 +68,7 @@ class SavedDetailPostingActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    Toast.makeText(this, "담아온 글을 삭제하였습니다.", Toast.LENGTH_SHORT).show()
                     finish()
                 }, {
                     Timber.d(it)
