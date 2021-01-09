@@ -38,7 +38,10 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.getUser().subscribe({
+        viewModel.getUser()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
             binding.writerText.text = it.nickname
         }, {
             Timber.d(it)
