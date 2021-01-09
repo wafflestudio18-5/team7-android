@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.wafflestudio.written.databinding.ActivitySettingsBinding
@@ -59,10 +60,11 @@ class SettingsActivity : AppCompatActivity() {
                 .subscribe({
                     if (it) {
                         PreferenceManager.getDefaultSharedPreferences(this).edit {
-                            remove("AUTH_TOKEN")
+                            remove("ACCESS_TOKEN")
                         }
                         val intent = LoginActivity.createIntent(this)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         startActivity(intent)
                     }
                 }, {
