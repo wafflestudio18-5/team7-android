@@ -57,6 +57,7 @@ class MyDetailPostingViewModel @ViewModelInject constructor(private val postingS
     fun confirmDelete() = confirmDeleteSubject.onNext(true)
     fun cancelDelete() = confirmDeleteSubject.onNext(false)
 
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
