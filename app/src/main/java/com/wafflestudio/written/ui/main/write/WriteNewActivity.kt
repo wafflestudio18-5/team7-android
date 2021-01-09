@@ -65,7 +65,6 @@ class WriteNewActivity : AppCompatActivity() {
             content_edit_text.setText(it.content)
             Timber.d(it.alignment)
             if (it.alignment.equals("CENTER")) {
-                Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show()
                 text_align_button.setImageResource(R.drawable.text_align_center_button)
                 content_edit_text.gravity = Gravity.LEFT
             }
@@ -206,9 +205,7 @@ class WriteNewActivity : AppCompatActivity() {
             viewModel.createTitle(binding.editTitleText.text.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    Toast.makeText(this, "!!!", Toast.LENGTH_SHORT).show()
-                }, {
+                .subscribe({}, {
                     Timber.d(it)
                     Toast.makeText(this, "Failed to create title", Toast.LENGTH_SHORT).show()
                 })
