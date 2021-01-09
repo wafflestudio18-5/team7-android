@@ -80,7 +80,7 @@ class MyDetailPostingActivity : AppCompatActivity() {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                Toast.makeText(this, "deleted!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "해당 글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
                                 finish()
                             }, {
                                 Timber.d(it)

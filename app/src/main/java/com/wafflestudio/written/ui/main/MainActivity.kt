@@ -15,6 +15,7 @@ import com.wafflestudio.written.ui.main.saved.SavedFragment
 import com.wafflestudio.written.ui.main.subscribe.SubscribeFragment
 import com.wafflestudio.written.ui.main.title.TitleFragment
 import com.wafflestudio.written.ui.main.write.WriteFragment
+import com.wafflestudio.written.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        drawer_write.setOnClickListener {
+        binding.drawerWrite.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<WriteFragment>(R.id.fragment_container_view_main)
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        drawer_title.setOnClickListener {
+        binding.drawerTitle.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<TitleFragment>(R.id.fragment_container_view_main)
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        drawer_my.setOnClickListener {
+        binding.drawerMy.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<MyFragment>(R.id.fragment_container_view_main)
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        drawer_subscribe.setOnClickListener {
+        binding.drawerSubscribe.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<SubscribeFragment>(R.id.fragment_container_view_main)
@@ -81,12 +82,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        drawer_saved.setOnClickListener {
+        binding.drawerSaved.setOnClickListener {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 replace<SavedFragment>(R.id.fragment_container_view_main)
                 drawer_layout_main.closeDrawer(GravityCompat.START, false)
             }
+        }
+
+        binding.settingsButton.setOnClickListener {
+            startActivity(SettingsActivity.createIntent(this))
         }
 
 
