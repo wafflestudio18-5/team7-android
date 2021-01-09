@@ -29,64 +29,119 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/write_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="75dp"
+                android:alpha="0.3"
+                android:src="@drawable/write_icon_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/drawer_write"
                 style="@style/MenuText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="75dp"
                 android:text="@string/menu_write_text"
                 android:textSize="25dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/write_icon"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/title_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:alpha="0.3"
+                android:src="@drawable/title_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/write_icon" />
 
             <TextView
                 android:id="@+id/drawer_title"
                 style="@style/MenuText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
                 android:text="@string/menu_title_text"
                 android:textSize="25dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/title_icon"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_write" />
+
+            <ImageView
+                android:id="@+id/my_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:alpha="0.5"
+                android:src="@drawable/my_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_icon" />
 
             <TextView
                 android:id="@+id/drawer_my"
                 style="@style/MenuText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
                 android:text="@string/menu_my_text"
                 android:textSize="25dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/my_icon"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_title" />
+
+            <ImageView
+                android:id="@+id/subscribe_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:alpha="0.5"
+                android:src="@drawable/subscribed_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/my_icon" />
 
             <TextView
                 android:id="@+id/drawer_subscribe"
                 style="@style/MenuText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
                 android:text="@string/menu_subscribe_text"
                 android:textSize="25dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/subscribe_icon"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_my" />
+
+            <ImageView
+                android:id="@+id/saved_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:alpha="0.3"
+                android:src="@drawable/saved_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/subscribe_icon" />
 
             <TextView
                 android:id="@+id/drawer_saved"
                 style="@style/MenuText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
                 android:text="@string/menu_saved_text"
                 android:textSize="25dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/saved_icon"
                 app:layout_constraintTop_toBottomOf="@+id/drawer_subscribe" />
 
             <ImageView

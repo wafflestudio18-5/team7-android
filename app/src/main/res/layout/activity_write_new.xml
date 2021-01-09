@@ -134,6 +134,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
+                android:alpha="0.7"
                 app:srcCompat="@drawable/copy_button" />
 
             <Space
@@ -146,6 +147,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
+                android:alpha="0.5"
                 app:srcCompat="@drawable/text_align_center_button" />
 
             <Space

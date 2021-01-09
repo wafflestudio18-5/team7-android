@@ -99,10 +99,12 @@ class WriteNewActivity : AppCompatActivity() {
         binding.textAlignButton.setOnClickListener {
             if (!centerAlignment) {
                 text_align_button.setImageResource(R.drawable.text_align_left_button)
+                text_align_button.alpha = 0.5F
                 centerAlignment = true
                 content_edit_text.gravity = Gravity.CENTER_HORIZONTAL
             } else {
                 text_align_button.setImageResource(R.drawable.text_align_center_button)
+                text_align_button.alpha = 0.5F
                 centerAlignment = false
                 content_edit_text.gravity = Gravity.LEFT
             }
