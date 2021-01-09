@@ -64,7 +64,7 @@ class WriteNewActivity : AppCompatActivity() {
             posting = it
             content_edit_text.setText(it.content)
             Timber.d(it.alignment)
-            if (it.alignment.equals("CENTER")) {
+            if (it.alignment == "CENTER") {
                 text_align_button.setImageResource(R.drawable.text_align_left_button)
                 content_edit_text.gravity = Gravity.CENTER_HORIZONTAL
             }

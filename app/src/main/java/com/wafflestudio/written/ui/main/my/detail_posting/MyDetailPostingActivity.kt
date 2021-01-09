@@ -34,6 +34,8 @@ class MyDetailPostingActivity : AppCompatActivity() {
 
     private val compositeDisposable = CompositeDisposable()
 
+    private lateinit var posting: PostingDto
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class MyDetailPostingActivity : AppCompatActivity() {
             }
 
         val intent = intent
-        val posting: PostingDto = intent.getParcelableExtra("posting") ?: run {
+        posting = intent.getParcelableExtra("posting") ?: run {
             finish()
             return
         }
@@ -137,6 +139,11 @@ class MyDetailPostingActivity : AppCompatActivity() {
     fun showDeleteDialog() {
         val dialog = DeleteDialogFragment()
         dialog.show(supportFragmentManager, "DeleteDialogFragment")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPostingDetail(posting.id)
     }
 
     override fun onDestroy() {
